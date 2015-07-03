@@ -2,7 +2,7 @@
   <test name="Test One">
     <parameter name="test-name" value="Test One"/>
     <classes>
-      <class name="com.howtodoinjava.parallelism.ParallelSuiteTest" />
+      <class name="com.almundo.services.ParallelSuiteTest" />
     </classes>
   </test>
   <test name="Test Two">
