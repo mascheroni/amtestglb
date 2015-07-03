@@ -3,11 +3,9 @@
     <groups>
       <define name="include-group">
         <include name="include-test-one" />
-        <include name="include-test-two" />
       </define>
       <define name="exclude-group">
-        <include name="test-one-exclude" />
-        <include name="test-two-exclude" />
+        <!-- <include name="test-to-exclude" /> -->
       </define>
       <run>
         <include name="include-group" />

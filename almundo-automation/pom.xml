@@ -20,7 +20,7 @@
                     <!-- Suite testng xml file to consider for test execution -->
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
-                        <suiteXmlFile>suites-test-testng.xml</suiteXmlFile>
+                        <!-- <suiteXmlFile>suites-test-testng.xml</suiteXmlFile> -->
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
@@ -28,6 +28,7 @@
                 the code -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
