@@ -38,7 +38,8 @@ public class Tests {
 		
 	    public boolean verificarServicio() throws MalformedURLException, IOException{
 	        String request = "";
-	        request = "https://apist.almundo.com/api/flights/itineraries?from=BUE,RIO&to=RIO,BUE&departure=2015-09-10,2015-09-17&site=ARG&language=ES";
+	        request = "https://apist.almundo.com/api/flights/itineraries?from=BUE,RIO&to=ZZZ,BUE&departure=2015-09-10,2015-09-17&site=ARG&language=ES";
+	        
 	        
 	        
 	        URL url = new URL(request);
@@ -50,6 +51,8 @@ public class Tests {
 		       connection = (HttpURLConnection) url.openConnection();
 		    }
 	        
+	        connection.addRequestProperty("X-ApiKey", "5592f8fd99325b40cba48649");
+	        connection.addRequestProperty("X-UOW", "glb-estefanie");
 	        
 //	        if (false) { //Autentication BASIC
 //	            new Base64();
@@ -78,7 +81,10 @@ public class Tests {
 	            
 	        //Validación de Status Code
 	        int iniValue = inputLine.indexOf("\"code\":");
-	        int code = Integer.parseInt(inputLine.substring(iniValue + 7, iniValue + 10));
+	        String a = inputLine.substring(iniValue + 7, iniValue + 10);
+	        int code = Integer.parseInt(a);
+	        
+	        
 	        
 	        switch (code) {
 	            case 200:
