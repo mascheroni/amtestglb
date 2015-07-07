@@ -1,4 +1,4 @@
-package com.almundo.services;
+package com.almundo.services.tests;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -2,13 +2,13 @@
   <test name="Test One">
     <parameter name="test-name" value="Test One"/>
     <classes>
-      <class name="com.almundo.services.ParallelSuiteTest" />
+      <class name="com.almundo.services.tests.ParallelSuiteTest" />
     </classes>
   </test>
   <test name="Test Two">
     <parameter name="test-name" value="Test Two"/>
     <classes>
-      <class name="com.almundo.services.ParallelSuiteTest" />
+      <class name="com.almundo.services.tests.ParallelSuiteTest" />
     </classes>
   </test>
 </suite>
