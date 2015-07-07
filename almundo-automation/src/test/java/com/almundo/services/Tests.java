@@ -1,8 +1,7 @@
 package com.almundo.services;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
@@ -19,6 +18,8 @@ public class Tests {
 		private boolean proxy = false;
 		private String http = "proxy.corp.globant.com";
 		private String port = "3128";
+		private String glbUserName = "glb-amascheroni";
+		private Scanner scanner;
 		
 	 	
 		@Test(groups = { "include-test-one" })
@@ -26,7 +27,7 @@ public class Tests {
 			
 	        System.out.println("Test method one");
 	        try {
-				Assert.assertTrue(this.verificarServicio());
+				Assert.assertTrue(this.verificarServicio("BUE", "RIO", "2015-09-10", "2015-09-17", true));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -36,9 +37,13 @@ public class Tests {
 			}
 	    }
 		
-	    public boolean verificarServicio() throws MalformedURLException, IOException{
-	        String request = "";
-	        request = "https://apist.almundo.com/api/flights/itineraries?from=BUE,RIO&to=RIO,BUE&departure=2015-09-10,2015-09-17&site=ARG&language=ES";
+	    public boolean verificarServicio(String origen, String destino, String fechaIda, 
+	    		String fechaVuelta, boolean roundTrip) throws MalformedURLException, IOException{
+	        
+	    	String request = "";
+	    	String service = "https://apist.almundo.com/api/flights/itineraries?";
+	        request = service + "from=" + origen + "," + destino + "&to=" + destino + "," + origen +
+	        		"&departure=" + fechaIda + "," + fechaVuelta + "&site=ARG&language=ES";
 	        
 	        
 	        URL url = new URL(request);
@@ -50,52 +55,36 @@ public class Tests {
 		       connection = (HttpURLConnection) url.openConnection();
 		    }
 	        
+	        connection.addRequestProperty("X-ApiKey", "5592f8fd99325b40cba48649");
+	        connection.addRequestProperty("X-UOW", this.glbUserName);
 	        
-//	        if (false) { //Autentication BASIC
-//	            new Base64();
-//				String basicAuth = "Basic " + new String(Base64.encode(url.getUserInfo().getBytes()));  
-//	            connection.setRequestProperty("Authorization", basicAuth);
-//	        }
-	        
-	        //Logging request
-	        System.out.println("Servicio: ");
-	        System.out.println("Peticion: " + request);
+	        System.out.println("Ping to apist.almundo.com");
+	        System.out.println("Request: " + request);
 	        System.out.println("");
 	        
-	        Scanner scanner = null;
+	        InputStream is = null;
 	        
 	        try {
-	        	scanner = new Scanner(connection.getInputStream());
+	        	is = connection.getInputStream();
 	        } catch (IOException ioe) {
 	        	System.out.println("API Key no existente o erronea");
 	        	System.out.println("");
 	        	return false;
 	        }
+	        
+	        scanner = new Scanner(is);
+	        
 	        String inputLine = "";
+	        
 	        while (scanner.hasNext()){
 	            inputLine = inputLine + scanner.nextLine() + "\n";
 	        }
-	            
-	        //Validación de Status Code
-	        int iniValue = inputLine.indexOf("\"code\":");
-	        int code = Integer.parseInt(inputLine.substring(iniValue + 7, iniValue + 10));
 	        
-	        switch (code) {
-	            case 200:
-	                System.out.println(code + ": Servicio Estable");
-	                return true;
-
-	            case 501:
-	                System.out.println(code + ": Parámetros incorrectos");
-	                return false;
-
-	            case 502:
-	                System.out.println(code + ": No se pudieron obtener las ciudades");
-	                return false;
-	            default:
-	            	System.out.println(code + ": Error no especificado");
-	    	        return false;
-	        }
+	        System.out.println("Response: ");
+	        System.out.println(inputLine);
+	        System.out.println("");
+	        
+	        return true;
 	             
 	    }
 		
