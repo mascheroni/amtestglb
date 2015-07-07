@@ -1,4 +1,4 @@
-package com.almundo.services;
+package com.almundo.automation;
 
 public class App 
 {

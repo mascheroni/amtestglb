@@ -1,4 +1,4 @@
-package com.almundo.services.tests;
+package com.almundo.automation.tests;
 
 import org.testng.annotations.*;
 
