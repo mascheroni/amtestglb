@@ -2,12 +2,13 @@ package com.almundo.automation.tests;
 
 import org.testng.annotations.*;
 
+import com.almundo.automation.services.Parameters;
+
 public class ParallelSuiteTest {
 
 	String testName = "";
 	 
     @BeforeTest
-    @Parameters({ "test-name" })
     public void beforeTest(String testName) {
         this.testName = testName;
         long id = Thread.currentThread().getId();
