@@ -2,10 +2,8 @@ package com.almundo.POJO;
 
 import java.io.Serializable;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
- * Class that represent the response of search flights
+ * Class that represent the response of search flights using Search service
  * 
  * @author zenen.morales
  *
