@@ -37,9 +37,6 @@ public class SearchResponse extends BaseTest {
 
 		SearchFlights searchResponse = gson.fromJson(
 				jsonResponse, SearchFlights.class);
-//		SearchFlights searchResponse = gson.fromJson(jsonResponse,
-//				SearchFlights.class);
-//		searchResponse.setLowestPricesByAirline(lowestPricesByAirline);
 		if (!searchResponse.getLowestPricesByAirline().getAirlines().isEmpty())
 			return true;
 		else
