@@ -30,6 +30,14 @@ public class HTTPClient {
 		this.urlConnection.addRequestProperty(key, value);
 	}
 	
+	public void setSearchRequest(String data){
+		String[] values = data.split("\\s+");
+		if(values.length == 3) {
+			//ONE WAY
+		}
+		//ROUND TRIP
+	}
+	
 	public void setRequest(List<Parameters>parameters) {
 		SearchParameters param = new SearchParameters();
 		parameters = param.concatenateParametersRoundtrip(parameters);
