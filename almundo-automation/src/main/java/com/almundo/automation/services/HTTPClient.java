@@ -43,6 +43,7 @@ public class HTTPClient {
 		}
 		
 		this.request = sb.toString();
+		System.out.println("Trying with: "+this.request);
 	}
 	
 	public void openConection() {
