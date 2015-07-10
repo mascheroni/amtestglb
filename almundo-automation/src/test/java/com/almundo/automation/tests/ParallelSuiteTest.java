@@ -1,13 +1,16 @@
 package com.almundo.automation.tests;
 
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 public class ParallelSuiteTest {
 
 	String testName = "";
 	 
     @BeforeTest
-    @Parameters({ "test-name" })
     public void beforeTest(String testName) {
         this.testName = testName;
         long id = Thread.currentThread().getId();

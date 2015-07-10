@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class HTTPClient {
@@ -27,12 +29,18 @@ public class HTTPClient {
 		this.urlConnection.addRequestProperty(key, value);
 	}
 	
-	public void setRequest() {
-		//TODO Codigo para setear los parametros a la request
+	public void setRequest(List<Parameters>parameters) {
 		
-		//EL codigo siguiente es a manera de ejemplo
-		this.request = this.ITINERARI_SERVICE + 
-				"from=BUE,RIO&to=RIO,BUE&departure=2015-09-10,2015-09-17&site=ARG&language=ES";
+		StringBuffer sb = new StringBuffer();
+		Iterator<Parameters> iterator = parameters.iterator();
+		sb.append(ITINERARI_SERVICE);
+		while(iterator.hasNext()){
+			Parameters paramTemp = iterator.next();
+			sb.append(this.concatenarParametro(paramTemp));
+			sb.append("&");
+		}
+		
+		this.request = sb.toString();
 	}
 	
 	public void openConection() {
@@ -76,6 +84,11 @@ public class HTTPClient {
             inputLine = inputLine + scanner.nextLine() + "\n";
         }
         return inputLine;
+	}
+	
+	private String concatenarParametro(Parameters parametro) {
+		return parametro.parametro() + "="+parametro.valor();
+
 	}
 	
 
