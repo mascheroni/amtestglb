@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import com.almundo.automation.services.Parameters;
 public class HTTPClient {
 	
 	private final String ITINERARI_SERVICE = 
@@ -30,7 +31,8 @@ public class HTTPClient {
 	}
 	
 	public void setRequest(List<Parameters>parameters) {
-		
+		SearchParameters param = new SearchParameters();
+		parameters = param.concatenateParametersRoundtrip(parameters);
 		StringBuffer sb = new StringBuffer();
 		Iterator<Parameters> iterator = parameters.iterator();
 		sb.append(ITINERARI_SERVICE);

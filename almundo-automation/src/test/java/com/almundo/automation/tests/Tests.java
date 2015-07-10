@@ -20,11 +20,13 @@ public class Tests extends BaseTest {
 			Parameters.DEPARTURE.valor("2015-09-10");
 			Parameters.SITE.valor("ARG");
 			Parameters.LANGUAGE.valor("ES");
+			Parameters.ROUNDTRIP.valor("true");
 			parameters.add(Parameters.FROM);
 			parameters.add(Parameters.TO);
 			parameters.add(Parameters.DEPARTURE);
 			parameters.add(Parameters.SITE);
 			parameters.add(Parameters.LANGUAGE);
+			parameters.add(Parameters.ROUNDTRIP);
 			
 		}
 		
