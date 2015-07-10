@@ -1,4 +1,4 @@
-package com.almundo.POJO;
+package com.almundo.automation.entities;
 
 import java.io.Serializable;
 

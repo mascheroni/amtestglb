@@ -1,7 +1,6 @@
-package com.almundo.POJO;
-
+package com.almundo.automation.entities;
 /**
- * Class that defines the ailires on the request parameters using Search service
+ * Class that defines the airlines on the request parameters using Search service
  * 
  * @author zenen.morales
  *

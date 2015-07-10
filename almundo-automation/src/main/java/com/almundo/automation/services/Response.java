@@ -1,8 +1,7 @@
 package com.almundo.automation.services;
 
-import com.almundo.POJO.LowestPricesByAirline;
-import com.almundo.POJO.SearchFlights;
-import com.almundo.automation.Deserializer.LowestPricesByAirlineDeserializer;
+import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
+import com.almundo.automation.entities.SearchFlights;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,21 +18,19 @@ public class Response {
 	}
 
 	/**
-	 * Get the the responseof searching flights
-	 * @return
+	 * Get the the response of search flights using Search service
+	 * 
+	 * @return SearchFlights
 	 */
 	public SearchFlights getSearchFlights() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(LowestPricesByAirline.class,
-				new LowestPricesByAirlineDeserializer());
+		gsonBuilder.registerTypeAdapter(SearchFlights.class,
+				new SearchFlightsDeserealizer());
 		Gson gson = gsonBuilder.create();
 
-		LowestPricesByAirline lowestPricesByAirline = gson.fromJson(
-				this.plainResponse, LowestPricesByAirline.class);
-		SearchFlights searchResponse = gson.fromJson(this.plainResponse,
+		SearchFlights searchFlights = gson.fromJson(this.plainResponse,
 				SearchFlights.class);
-		searchResponse.setLowestPricesByAirline(lowestPricesByAirline);
-		return searchResponse;
+		return searchFlights;
 	}
 
 }

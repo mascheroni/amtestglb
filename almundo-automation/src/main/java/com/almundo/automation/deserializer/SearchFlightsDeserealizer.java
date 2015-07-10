@@ -1,11 +1,12 @@
-package com.almundo.automation.Deserializer;
+package com.almundo.automation.deserializer;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.almundo.POJO.Airline;
-import com.almundo.POJO.LowestPricesByAirline;
+import com.almundo.automation.entities.Airline;
+import com.almundo.automation.entities.LowestPricesByAirline;
+import com.almundo.automation.entities.SearchFlights;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -15,17 +16,19 @@ import com.google.gson.JsonParseException;
 
 /**
  * This class deserialize the JSON response of the search flights service
+ * 
  * @author zenen.morales
  *
  */
-public class LowestPricesByAirlineDeserializer implements
-		JsonDeserializer<LowestPricesByAirline> {
+public class SearchFlightsDeserealizer implements
+		JsonDeserializer<SearchFlights> {
 
 	@Override
-	public LowestPricesByAirline deserialize(JsonElement jsonElement,
-			Type arg1, JsonDeserializationContext arg2)
-			throws JsonParseException {
+	public SearchFlights deserialize(JsonElement jsonElement, Type typeOfT,
+			JsonDeserializationContext context) throws JsonParseException {
 		final JsonObject jsonObject = jsonElement.getAsJsonObject();
+		final JsonElement jsonId = jsonObject.get("id");
+		final String id = jsonId.getAsString();
 		final JsonArray jsonAirlinesArray = jsonObject.get(
 				"lowest_prices_by_airline").getAsJsonArray();
 
@@ -44,9 +47,13 @@ public class LowestPricesByAirlineDeserializer implements
 			airlines.add(airline);
 		}
 
+		SearchFlights searchResponse = new SearchFlights();
+		searchResponse.setId(id);
+
 		LowestPricesByAirline lowestPricesByAirline = new LowestPricesByAirline();
 		lowestPricesByAirline.setAirlines(airlines);
-
-		return lowestPricesByAirline;
+		searchResponse.setLowestPricesByAirline(lowestPricesByAirline);
+		return searchResponse;
 	}
+
 }
