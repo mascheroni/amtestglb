@@ -1,8 +1,10 @@
 package com.almundo.automation.tests;
 
-import org.testng.annotations.*;
-
-import com.almundo.automation.services.Parameters;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 public class ParallelSuiteTest {
 
