@@ -2,7 +2,7 @@
   <test name="Group of group Test">
     <groups>
       <define name="include-group">
-        <include name="include-test-one" />
+        <include name="flight-search" />
       </define>
       <define name="exclude-group">
         <!-- <include name="test-to-exclude" /> -->
@@ -13,7 +13,7 @@
       </run>
     </groups>
     <classes>
-    	<class name="com.almundo.automation.tests.Tests" />
+    	<class name="com.almundo.automation.tests.FlightSearchTests" />
     </classes>
   </test>
 </suite>

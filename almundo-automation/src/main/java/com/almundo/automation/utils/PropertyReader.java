@@ -1,36 +1,41 @@
 package com.almundo.automation.utils;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyReader {
 	
-	private static final String PATH = "src/main/resources/com/almundo/automation/data/";
-	private InputStream inputStream;
+	private static final String PATH = "./src/main/resources/com/almundo/automation/data/";
+	private FileInputStream inputStream;
 	
-	public String getPropertiesValues(String testID, String property) 
-			throws IOException, FileNotFoundException{
+	public String getPropertiesValues(String testID, String property) {
 		
 		try {
 			Properties properties = new Properties();
 			String propLocation = PATH + property;
-			inputStream = getClass().getClassLoader().getResourceAsStream(propLocation);
+			inputStream = new FileInputStream(propLocation);
 			
 			if(inputStream != null) {
 				properties.load(inputStream);
 			} else {
-				throw new FileNotFoundException(propLocation + "was not found in the classpath");
+				throw new FileNotFoundException(propLocation + " was not found in the classpath");
 			}
 			
 			return properties.getProperty(testID);
 			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("Se ha producido un error");
 			e.printStackTrace();
 		} finally {
-			inputStream.close();
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return null;

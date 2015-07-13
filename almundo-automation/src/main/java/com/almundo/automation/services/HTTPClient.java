@@ -25,6 +25,7 @@ public class HTTPClient {
 	private String http = "proxy.corp.globant.com";
 	private String port = "3128";
 	private Scanner scanner;
+	private String glbUserName = "glb-amascheroni";
 	
 	public void addHeaderValue(String key, String value) {
 		this.urlConnection.addRequestProperty(key, value);
@@ -32,10 +33,19 @@ public class HTTPClient {
 	
 	public void setSearchRequest(String data){
 		String[] values = data.split("\\s+");
+		String parameters;
 		if(values.length == 3) {
 			//ONE WAY
+			parameters = "from=" + values[0] + "&" +
+						  "to=" + values[1] + "&" +
+						  "departure=" + values[2] + "&" +
+						  "site=ARG&language=ES";
+		} else {
+			//ROUND TRIP
+			parameters = "";
+			
 		}
-		//ROUND TRIP
+		this.request = ITINERARI_SERVICE + parameters;
 	}
 	
 	public void setRequest(List<Parameters>parameters) {
@@ -76,11 +86,13 @@ public class HTTPClient {
 	}
 	
 	public Response post() {
+		this.openConection();
+		this.addHeaderValue("X-ApiKey", "5592f8fd99325b40cba48649");
+		this.addHeaderValue("X-UOW", this.glbUserName);
 		StringBuilder plainResponse = new StringBuilder();
 		try {
 			plainResponse.append(this.postAction());
 		} catch (IOException ioe) {
-        	System.out.println("Invalid or not present API-Key \n");
         	ioe.printStackTrace();
         }
 		return new Response(plainResponse.toString());
