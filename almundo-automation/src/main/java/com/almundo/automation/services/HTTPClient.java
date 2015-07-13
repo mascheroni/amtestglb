@@ -33,19 +33,12 @@ public class HTTPClient {
 	
 	public void setSearchRequest(String data){
 		String[] values = data.split("\\s+");
-		String parameters;
-		if(values.length == 3) {
-			//ONE WAY
-			parameters = "from=" + values[0] + "&" +
-						  "to=" + values[1] + "&" +
-						  "departure=" + values[2] + "&" +
-						  "site=ARG&language=ES";
-		} else {
-			//ROUND TRIP
-			parameters = "";
-			
+		String parameters = "";
+		for(String param: values) {
+			parameters = parameters + param + "&";
 		}
-		this.request = ITINERARI_SERVICE + parameters;
+		this.request = ITINERARI_SERVICE + parameters + "limit=100";
+		System.out.println(this.request);
 	}
 	
 	public void setRequest(List<Parameters>parameters) {

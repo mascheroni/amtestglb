@@ -22,7 +22,6 @@
 				<configuration>
 					<!-- Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
-						<suiteXmlFile>parameters</suiteXmlFile>
 						<suiteXmlFile>${xmlSuitesPath}/${tag}.xml</suiteXmlFile>
 						<!-- <suiteXmlFile>suites-test-testng.xml</suiteXmlFile> -->
 					</suiteXmlFiles>
