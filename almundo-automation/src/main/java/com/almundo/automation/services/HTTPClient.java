@@ -37,7 +37,9 @@ public class HTTPClient {
 		for(String param: values) {
 			parameters = parameters + param + "&";
 		}
-		this.request = ITINERARI_SERVICE + parameters + "limit=100";
+		
+		this.request = ITINERARI_SERVICE +
+				parameters.substring(0, parameters.length() - 1);
 		System.out.println(this.request);
 	}
 	
