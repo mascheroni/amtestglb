@@ -20,7 +20,8 @@ public class SearchParameters {
 		int returnIndex = -1;
 		
 		for(int i = 0; i < params.size(); i++){
-			switch (params.get(i).valor()){
+			String value = params.get(i).valor();
+			switch (value){
 			case"from":
 				from = params.get(i);
 				fromIndex = i;

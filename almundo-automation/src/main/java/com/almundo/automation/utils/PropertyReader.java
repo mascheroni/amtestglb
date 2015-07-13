@@ -10,12 +10,12 @@ public class PropertyReader {
 	private static final String PATH = "src/main/resources/com/almundo/automation/data/";
 	private InputStream inputStream;
 	
-	public String getSearchPropertiesValues(String testID) 
+	public String getPropertiesValues(String testID, String property) 
 			throws IOException, FileNotFoundException{
 		
 		try {
 			Properties properties = new Properties();
-			String propLocation = PATH + "search.properties";
+			String propLocation = PATH + property;
 			inputStream = getClass().getClassLoader().getResourceAsStream(propLocation);
 			
 			if(inputStream != null) {
