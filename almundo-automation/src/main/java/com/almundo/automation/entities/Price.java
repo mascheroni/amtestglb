@@ -1,7 +1,5 @@
 package com.almundo.automation.entities;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * 
  * @author zenen.morales
@@ -9,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Price {
 
-	@SerializedName("total")
 	private float total;
 
 	private Detail detail;

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.almundo.automation.entities.Clusters;
+import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.services.Response;
 
 public class FlightSearchTests extends BaseTest {
@@ -33,38 +33,36 @@ public class FlightSearchTests extends BaseTest {
 		System.out.println(response.getPlainResponse());
 		Assert.assertTrue(this.validateClusters(response));
 	}
-	
+
 	@Test(groups = { "flight-search" })
-	public void verifyPricesAccordingToNumberOfPax(){
+	public void verifyPricesAccordingToNumberOfPax() {
 		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
-		List<Clusters> clusters = response
-				.getSearchFlightsAndClusters().getClusters();
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
 		Map<String, Object> results = verifyPrices(clusters);
 		String carrier = (String) results.get("Carrier");
 		boolean result = (Boolean) results.get("Result");
 		String expPrice = (String) results.get("ExpectedPrice");
 		String actualPrice = (String) results.get("ActualPrice");
-		Assert.assertTrue(result, "The carrier " + carrier + " has " +
-				actualPrice + " meanwhile the expected price is " + 
-				expPrice);
-		
+		Assert.assertTrue(result, "The carrier " + carrier + " has "
+				+ actualPrice + " meanwhile the expected price is " + expPrice);
+
 	}
-	
-	
-	private Map<String, Object> verifyPrices(List<Clusters> clusters) {
+
+	private Map<String, Object> verifyPrices(List<Cluster> clusters) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		for (Clusters cluster: clusters) {
-			float adultPrice = cluster.getPrice().getDetail().getAdults();
-			float childPrice = cluster.getPrice().getDetail().getChildren();
-			float infantPrice = cluster.getPrice().getDetail().getInfants();
+		for (Cluster cluster : clusters) {
+			float adultPrice = cluster.getPrice().getDetail().getAdultPrice();
+			float childPrice = cluster.getPrice().getDetail().getChildPrice();
+			float infantPrice = cluster.getPrice().getDetail().getInfantPrice();
 			float taxPrice = cluster.getPrice().getDetail().getTaxes();
 			float extraTax = cluster.getPrice().getDetail().getExtra_tax();
 			float total = cluster.getPrice().getTotal();
-			float sum = ( adultPrice * 2 ) + childPrice + infantPrice + taxPrice +
-					extraTax;
-			if(total != sum) {
+			float sum = (adultPrice * 2) + childPrice + infantPrice + taxPrice
+					+ extraTax;
+			if (total != sum) {
 				result.put("Carrier", cluster.getValidating_carrier());
 				result.put("Result", Boolean.FALSE);
 				result.put("ExpectedPrice", Float.toString(total));
