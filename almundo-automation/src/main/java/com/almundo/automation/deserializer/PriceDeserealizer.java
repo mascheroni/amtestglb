@@ -42,7 +42,7 @@ public class PriceDeserealizer implements JsonDeserializer<Price> {
 				Detail.class);
 
 		Price price = new Price();
-		price.setTotal(jsonTotal.getAsInt());
+		price.setTotal(jsonTotal.getAsFloat());
 		price.setDetail(detail);
 		return price;
 	}

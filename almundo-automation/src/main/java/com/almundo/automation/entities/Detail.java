@@ -10,13 +10,13 @@ import com.google.gson.annotations.SerializedName;
 public class Detail {
 
 	@SerializedName("adults")
-	private int adults;
+	private float adults;
 
 	@SerializedName("children")
-	private int children;
+	private float children;
 
 	@SerializedName("infants")
-	private int infants;
+	private float infants;
 
 	@SerializedName("taxes")
 	private float taxes;
@@ -24,27 +24,27 @@ public class Detail {
 	@SerializedName("extra_tax")
 	private float extra_tax;
 
-	public int getAdults() {
+	public float getAdults() {
 		return adults;
 	}
 
-	public void setAdults(int adults) {
+	public void setAdults(float adults) {
 		this.adults = adults;
 	}
 
-	public int getChildren() {
+	public float getChildren() {
 		return children;
 	}
 
-	public void setChildren(int children) {
+	public void setChildren(float children) {
 		this.children = children;
 	}
 
-	public int getInfants() {
+	public float getInfants() {
 		return infants;
 	}
 
-	public void setInfants(int infants) {
+	public void setInfants(float infants) {
 		this.infants = infants;
 	}
 

@@ -1,8 +1,13 @@
 package com.almundo.automation.tests;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.almundo.automation.entities.Clusters;
 import com.almundo.automation.services.Response;
 
 public class FlightSearchTests extends BaseTest {
@@ -11,7 +16,7 @@ public class FlightSearchTests extends BaseTest {
 	private static final String TEST_ONE = "test1";
 	private static final String TEST_TWO = "test2";
 
-	@Test(groups = { "flight-search" })
+	@Test(groups = { "NONE" })
 	public void testMethodOne() {
 		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
@@ -20,13 +25,56 @@ public class FlightSearchTests extends BaseTest {
 		Assert.assertTrue(this.validateFlights(response));
 	}
 
-	@Test(groups = { "flight-search" })
+	@Test(groups = { "NONE" })
 	public void testMethodTwo() {
 		String data = this.data.getPropertiesValues(TEST_TWO, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
 		System.out.println(response.getPlainResponse());
 		Assert.assertTrue(this.validateClusters(response));
+	}
+	
+	@Test(groups = { "flight-search" })
+	public void verifyPricesAccordingToNumberOfPax(){
+		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		List<Clusters> clusters = response
+				.getSearchFlightsAndClusters().getClusters();
+		Map<String, Object> results = verifyPrices(clusters);
+		String carrier = (String) results.get("Carrier");
+		boolean result = (Boolean) results.get("Result");
+		String expPrice = (String) results.get("ExpectedPrice");
+		String actualPrice = (String) results.get("ActualPrice");
+		Assert.assertTrue(result, "The carrier " + carrier + " has " +
+				actualPrice + " meanwhile the expected price is " + 
+				expPrice);
+		
+	}
+	
+	
+	private Map<String, Object> verifyPrices(List<Clusters> clusters) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		for (Clusters cluster: clusters) {
+			float adultPrice = cluster.getPrice().getDetail().getAdults();
+			float childPrice = cluster.getPrice().getDetail().getChildren();
+			float infantPrice = cluster.getPrice().getDetail().getInfants();
+			float taxPrice = cluster.getPrice().getDetail().getTaxes();
+			float extraTax = cluster.getPrice().getDetail().getExtra_tax();
+			float total = cluster.getPrice().getTotal();
+			float sum = ( adultPrice * 2 ) + childPrice + infantPrice + taxPrice +
+					extraTax;
+			if(total != sum) {
+				result.put("Carrier", cluster.getValidating_carrier());
+				result.put("Result", Boolean.FALSE);
+				result.put("ExpectedPrice", Float.toString(total));
+				result.put("ActualPrice", Float.toString(sum));
+				return result;
+			}
+		}
+		result.put("Result", Boolean.TRUE);
+		result.put("Carrier", null);
+		return result;
 	}
 
 	/**

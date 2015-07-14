@@ -10,15 +10,15 @@ import com.google.gson.annotations.SerializedName;
 public class Price {
 
 	@SerializedName("total")
-	private int total;
+	private float total;
 
 	private Detail detail;
 
-	public int getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 
