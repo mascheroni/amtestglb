@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
  * @author zenen.morales
  *
  */
-public class Clusters {
+public class Cluster {
 
-	private Segments segments;
+	private Segment segment;
 	private Price price;
 
 	@SerializedName("domestic")
@@ -18,12 +18,12 @@ public class Clusters {
 	@SerializedName("validating_carrier")
 	private String validating_carrier;
 
-	public Segments getSegments() {
-		return segments;
+	public Segment getSegment() {
+		return segment;
 	}
 
-	public void setSegments(Segments segments) {
-		this.segments = segments;
+	public void setSegment(Segment segment) {
+		this.segment = segment;
 	}
 
 	public Price getPrice() {

@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.almundo.automation.entities.Clusters;
+import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Price;
 
 import com.google.gson.GsonBuilder;
@@ -37,19 +37,19 @@ import com.google.gson.JsonPrimitive;
  * @author zenen.morales
  *
  */
-public class ClusterDeserealizer implements JsonDeserializer<List<Clusters>> {
+public class ClusterDeserealizer implements JsonDeserializer<List<Cluster>> {
 
-	public List<Clusters> deserialize(JsonElement json, Type typeOfT,
+	public List<Cluster> deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
 
 		final JsonObject jsonObject = json.getAsJsonObject();
 		final JsonArray jsonClustersArray = jsonObject.get("clusters")
 				.getAsJsonArray();
 
-		final List<Clusters> clusters = new ArrayList<Clusters>();
+		final List<Cluster> clusters = new ArrayList<Cluster>();
 
 		Price price;
-		Clusters cluster;
+		Cluster cluster;
 		for (int i = 0; i < jsonClustersArray.size(); i++) {
 			final JsonObject jsonClusterObject = (JsonObject) jsonClustersArray
 					.get(i);
@@ -62,7 +62,7 @@ public class ClusterDeserealizer implements JsonDeserializer<List<Clusters>> {
 					.registerTypeAdapter(Price.class, new PriceDeserealizer())
 					.create().fromJson(jsonClusterObject, Price.class);
 
-			cluster = new Clusters();
+			cluster = new Cluster();
 			cluster.setPrice(price);
 			cluster.setDomestic(domestic.getAsBoolean());
 			cluster.setValidating_carrier(validationCarrier.getAsString());
