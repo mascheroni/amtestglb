@@ -1,9 +1,15 @@
 package com.almundo.automation.services;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
+import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
+import com.almundo.automation.entities.Clusters;
 import com.almundo.automation.entities.SearchFlights;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class Response {
 
@@ -30,6 +36,31 @@ public class Response {
 
 		SearchFlights searchFlights = gson.fromJson(this.plainResponse,
 				SearchFlights.class);
+		return searchFlights;
+	}
+
+	/**
+	 * Get the the response of search flights using Search service
+	 * 
+	 * @return SearchFlights
+	 */
+	public SearchFlights getSearchFlightsAndClusters() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(SearchFlights.class,
+				new SearchFlightsDeserealizer());
+		Gson gson = gsonBuilder.create();
+
+		SearchFlights searchFlights = gson.fromJson(this.plainResponse,
+				SearchFlights.class);
+
+		final Type clusterA = new TypeToken<Clusters>() { }.getType();
+		gsonBuilder.registerTypeAdapter(clusterA,
+				new ClusterDeserealizer());
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<Clusters> clusters = (List<Clusters>) gson.fromJson(
+				this.plainResponse, clusterA);
+		searchFlights.setClusters(clusters);
 		return searchFlights;
 	}
 

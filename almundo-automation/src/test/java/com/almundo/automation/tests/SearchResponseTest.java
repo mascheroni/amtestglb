@@ -54,7 +54,6 @@ public class SearchResponseTest extends BaseTest {
 	 * @return boolean
 	 */
 	private boolean validateflights(Response response) {
-		response.getSearchFlights();
 		if (!response.getSearchFlights().getLowestPricesByAirline()
 				.getAirlines().isEmpty())
 			return true;

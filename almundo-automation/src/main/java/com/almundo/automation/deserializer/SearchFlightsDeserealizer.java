@@ -23,10 +23,9 @@ import com.google.gson.JsonParseException;
 public class SearchFlightsDeserealizer implements
 		JsonDeserializer<SearchFlights> {
 
-	@Override
-	public SearchFlights deserialize(JsonElement jsonElement, Type typeOfT,
+	public SearchFlights deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
-		final JsonObject jsonObject = jsonElement.getAsJsonObject();
+		final JsonObject jsonObject = json.getAsJsonObject();
 		final JsonElement jsonId = jsonObject.get("id");
 		final String id = jsonId.getAsString();
 		final JsonArray jsonAirlinesArray = jsonObject.get(

@@ -22,7 +22,6 @@ import com.google.gson.JsonParseException;
 public class LowestPricesByAirlineDeserializer implements
 		JsonDeserializer<LowestPricesByAirline> {
 
-	@Override
 	public LowestPricesByAirline deserialize(JsonElement jsonElement,
 			Type arg1, JsonDeserializationContext arg2)
 			throws JsonParseException {
