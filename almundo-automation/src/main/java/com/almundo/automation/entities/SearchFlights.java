@@ -1,6 +1,7 @@
 package com.almundo.automation.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Class that represent the response of search flights using Search service
@@ -18,6 +19,7 @@ public class SearchFlights implements Serializable {
 	private String id;
 
 	private LowestPricesByAirline lowestPricesByAirline;
+	private List<Clusters> clusters;
 
 	public SearchFlights() {
 	}
@@ -37,6 +39,14 @@ public class SearchFlights implements Serializable {
 	public void setLowestPricesByAirline(
 			LowestPricesByAirline lowestPricesByAirline) {
 		this.lowestPricesByAirline = lowestPricesByAirline;
+	}
+
+	public List<Clusters> getClusters() {
+		return clusters;
+	}
+
+	public void setClusters(List<Clusters> clusters) {
+		this.clusters = clusters;
 	}
 
 }
