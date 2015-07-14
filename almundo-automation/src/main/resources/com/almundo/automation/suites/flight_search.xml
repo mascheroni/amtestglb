@@ -1,4 +1,10 @@
 <suite name="Group of group Suite" verbose="1">
+<listeners>
+	<listener class-name="org.uncommons.reportng.HTMLReporter" />
+	<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	
+</listeners>
+
   <test name="Group of group Test">
     <groups>
       <define name="include-group">

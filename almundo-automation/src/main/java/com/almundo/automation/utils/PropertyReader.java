@@ -7,14 +7,14 @@ import java.util.Properties;
 
 public class PropertyReader {
 	
-	private static final String PATH = "./src/main/resources/com/almundo/automation/data/";
+	private static final String PATH = "../src/main/resources/com/almundo/automation/data/";
 	private FileInputStream inputStream;
 	
 	public String getPropertiesValues(String testID, String property) {
-		
 		try {
 			Properties properties = new Properties();
 			String propLocation = PATH + property;
+			System.out.println(System.getProperty("user.dir"));
 			inputStream = new FileInputStream(propLocation);
 			
 			if(inputStream != null) {
