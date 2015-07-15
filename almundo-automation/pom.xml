@@ -49,7 +49,8 @@
 						</property>
 						<property>
 							<name>listener</name>
-							<value>org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter</value>
+							<value>org.uncommons.reportng.HTMLReporter,
+								org.uncommons.reportng.JUnitXMLReporter</value>
 						</property>
 					</properties>
 					<workingDirectory>target/</workingDirectory>
@@ -84,7 +85,7 @@
 			<artifactId>testng</artifactId>
 			<version>6.3.1</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.uncommons</groupId>
 			<artifactId>reportng</artifactId>
 			<version>1.1.2</version>
@@ -101,6 +102,11 @@
 			<artifactId>guice</artifactId>
 			<version>3.0</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
 </project>

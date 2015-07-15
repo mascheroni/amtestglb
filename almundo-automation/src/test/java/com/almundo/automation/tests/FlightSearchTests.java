@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.services.Response;
+import com.almundo.automation.utils.XmlDataFactory;
 
 public class FlightSearchTests extends BaseTest {
 
@@ -34,7 +35,7 @@ public class FlightSearchTests extends BaseTest {
 		Assert.assertTrue(this.validateClusters(response));
 	}
 
-	@Test(groups = { "flight-search" })
+	@Test(groups = { "flight-search" }, dataProvider = "params", dataProviderClass = XmlDataFactory.class)
 	public void verifyPricesAccordingToNumberOfPax() {
 		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
