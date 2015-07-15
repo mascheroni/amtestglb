@@ -79,14 +79,6 @@
 					<value>1</value>
 				</dataObject>
 				<dataObject>
-					<name>children</name>
-					<value>1</value>
-				</dataObject>
-				<dataObject>
-					<name>class</name>
-					<value>C</value>
-				</dataObject>
-				<dataObject>
 					<name>site</name>
 					<value>ARG</value>
 				</dataObject>
@@ -114,10 +106,6 @@
 				<dataObject>
 					<name>adults</name>
 					<value>1</value>
-				</dataObject>
-				<dataObject>
-					<name>class</name>
-					<value>C</value>
 				</dataObject>
 				<dataObject>
 					<name>site</name>

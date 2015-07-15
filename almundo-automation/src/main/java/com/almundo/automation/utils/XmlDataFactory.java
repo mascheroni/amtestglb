@@ -149,16 +149,19 @@ public class XmlDataFactory {
 
 		if (dataSet != null) {
 			if (!dataSet.getDataRows().isEmpty()) {
+				System.out.println("ARRAY 1");
 				List<DataRow> dataRowList = dataSet.getDataRows();
-
+				System.out.println("ARRAY 2");
 				dataRowArray = new String[dataRowList.toArray().length][((DataRow) dataRowList
 						.get(0)).getDataObjects().toArray().length];
 
 				for (DataRow oneDataRow : dataSet.getDataRows()) {
 					int i;
+					System.out.println("ARRAY 3");
 					Object[] dataValues = oneDataRow
 							.getDataObjectsValuesAsArray();
 					for (i = 0; i < dataValues.length; i++) {
+						System.out.println("ARRAY 4");
 						dataRowArray[j][i] = dataValues[i];
 					}
 					j++;
@@ -196,11 +199,14 @@ public class XmlDataFactory {
 	 *             if the path given by parameter is not found
 	 */
 	public void loadTestData(String filesPath) throws IOException {
+		System.out.println("Before trim");
 		filesPath = filesPath.trim();
 		// Log.getInstance().getLogger().log(Level.INFO,
 		// "Loading test data from: " + filesPath);
+		System.out.println("Tomando archivos de "+filesPath);
 		try {
 			if (filesPath != null && filesPath.length() != 0) {
+				System.out.println("Luego for");
 				XStream xstreamTC = new XStream(new DomDriver());
 				xstreamTC.alias("testCaseGroup", TestCaseGroup.class);
 				xstreamTC.alias("dataSets", java.util.ArrayList.class);
@@ -209,14 +215,15 @@ public class XmlDataFactory {
 				xstreamTC.alias("dataRow", DataRow.class);
 				xstreamTC.alias("dataObjects", java.util.ArrayList.class);
 				xstreamTC.alias("dataObject", DataObject.class);
-
+				System.out.println("Alias creados");
 				String[] fileNames = getFileNames(filesPath);
-
+				System.out.println("Obtiene los file names");
 				StringBuffer data = fillDataBuffer(fileNames, filesPath);
-
+				System.out.println("Obtiene data");
 				String dataString = data.toString();
-
+				
 				testCaseGroup = (TestCaseGroup) xstreamTC.fromXML(dataString);
+				System.out.println("Testcasegroup creado");
 			}
 
 		} catch (XStreamException e) {

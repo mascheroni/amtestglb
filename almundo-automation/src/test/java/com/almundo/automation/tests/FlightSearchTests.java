@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.services.Response;
-import com.almundo.automation.utils.XmlDataFactory;
+import com.almundo.automation.utils.DataProviders;
 
 public class FlightSearchTests extends BaseTest {
 
@@ -35,7 +35,7 @@ public class FlightSearchTests extends BaseTest {
 		Assert.assertTrue(this.validateClusters(response));
 	}
 
-	@Test(groups = { "flight-search" }, dataProvider = "params", dataProviderClass = XmlDataFactory.class)
+	@Test(groups = { "NONE" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyPricesAccordingToNumberOfPax() {
 		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
@@ -51,7 +51,15 @@ public class FlightSearchTests extends BaseTest {
 				+ actualPrice + " meanwhile the expected price is " + expPrice);
 
 	}
-
+	
+	@Test(groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void holaKase(String param1, String param2, String param3, String param4, String param5, String param6) {
+		System.out.println("");
+		System.out.println(param1 + "" + param3 + "" + param6 + "");
+		System.out.println("");
+	}
+	
+	
 	private Map<String, Object> verifyPrices(List<Cluster> clusters) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		for (Cluster cluster : clusters) {
