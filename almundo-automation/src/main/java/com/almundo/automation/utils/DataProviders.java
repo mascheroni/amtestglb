@@ -12,7 +12,7 @@ public class DataProviders {
 	@DataProvider(name = "test1")
 	public static Object[][] getSearchData() throws IOException {
 		XmlDataFactory factory = XmlDataFactory.getInstance();
-		factory.initialize("../src/main/resources/com/almundo/automation/smokeTest/");
+		factory.initialize("../src/main/resources/com/almundo/automation/data/");
 		return factory.getArrayFromDataSet("APISearch");
 	}
 
