@@ -10,6 +10,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import com.almundo.automation.services.Parameters;
@@ -31,16 +33,20 @@ public class HTTPClient {
 		this.urlConnection.addRequestProperty(key, value);
 	}
 	
-	public void setSearchRequest(String data){
-		String[] values = data.split("\\s+");
-		String parameters = "";
-		for(String param: values) {
-			parameters = parameters + param + "&";
+	public void setSearchRequest(Map<String, String> data){
+		Iterator<Entry<String, String>> it = data.entrySet().iterator();
+		StringBuilder sb = new StringBuilder();
+		sb.append(ITINERARI_SERVICE);
+		while (it.hasNext()) {
+			Map.Entry<String, String> pair =
+					(Map.Entry<String, String>) it.next();
+			sb.append(pair.getKey());
+			sb.append("=");
+			sb.append(pair.getValue());
+			sb.append("&");
 		}
 		
-		this.request = ITINERARI_SERVICE +
-				parameters.substring(0, parameters.length() - 1);
-		System.out.println(this.request);
+		this.request = sb.toString().substring(0, sb.length() - 1);
 	}
 	
 	public void setRequest(List<Parameters>parameters) {

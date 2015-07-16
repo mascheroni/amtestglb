@@ -28,6 +28,14 @@
 					<name>language</name>
 					<value>ES</value>
 				</dataObject>
+				<dataObject>
+					<name>children</name>
+					<value>1</value>
+				</dataObject>
+				<dataObject>
+					<name>infants</name>
+					<value>1</value>
+				</dataObject>
 			</dataObjects>
 		</dataRow>
 		<dataRow>
@@ -35,7 +43,7 @@
 			<dataObjects>
 				<dataObject>
 					<name>date</name>
-					<value>2 days</value>
+					<value>1 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>
@@ -57,6 +65,14 @@
 					<name>language</name>
 					<value>ES</value>
 				</dataObject>
+				<dataObject>
+					<name>children</name>
+					<value>1</value>
+				</dataObject>
+				<dataObject>
+					<name>infants</name>
+					<value>1</value>
+				</dataObject>
 			</dataObjects>
 		</dataRow>
 		<dataRow>
@@ -64,7 +80,7 @@
 			<dataObjects>
 				<dataObject>
 					<name>date</name>
-					<value>2 days</value>
+					<value>3 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>
@@ -85,6 +101,14 @@
 				<dataObject>
 					<name>language</name>
 					<value>ES</value>
+				</dataObject>
+				<dataObject>
+					<name>children</name>
+					<value>1</value>
+				</dataObject>
+				<dataObject>
+					<name>infants</name>
+					<value>1</value>
 				</dataObject>
 			</dataObjects>
 		</dataRow>
@@ -114,6 +138,14 @@
 				<dataObject>
 					<name>language</name>
 					<value>ES</value>
+				</dataObject>
+				<dataObject>
+					<name>children</name>
+					<value>1</value>
+				</dataObject>
+				<dataObject>
+					<name>infants</name>
+					<value>1</value>
 				</dataObject>
 			</dataObjects>
 		</dataRow>

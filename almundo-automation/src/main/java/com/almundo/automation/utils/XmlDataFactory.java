@@ -181,7 +181,6 @@ public class XmlDataFactory {
 				StringBuffer data = fillDataBuffer(fileNames, filesPath);
 				String dataString = data.toString();
 				testCaseGroup = (TestCaseGroup) xstreamTC.fromXML(dataString);
-				System.out.println("Testcasegroup creado");
 			}
 
 		} catch (XStreamException e) {
