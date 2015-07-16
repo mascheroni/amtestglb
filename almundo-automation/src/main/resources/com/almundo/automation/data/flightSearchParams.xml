@@ -5,8 +5,8 @@
 			<name>APISearch001</name>
 			<dataObjects>
 				<dataObject>
-					<name>departure</name>
-					<value>2015-07-19</value>
+					<name>date</name>
+					<value>2 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>
@@ -34,8 +34,8 @@
 			<name>APISearch002</name>
 			<dataObjects>
 				<dataObject>
-					<name>departure</name>
-					<value>2015-07-19</value>
+					<name>date</name>
+					<value>2 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>
@@ -63,8 +63,8 @@
 			<name>APISearch003</name>
 			<dataObjects>
 				<dataObject>
-					<name>departure</name>
-					<value>2015-07-19</value>
+					<name>date</name>
+					<value>2 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>
@@ -92,8 +92,8 @@
 			<name>APISearch004</name>
 			<dataObjects>
 				<dataObject>
-					<name>departure</name>
-					<value>2015-07-19,2015-07-25</value>
+					<name>date</name>
+					<value>2 days - 7 days</value>
 				</dataObject>
 				<dataObject>
 					<name>from</name>

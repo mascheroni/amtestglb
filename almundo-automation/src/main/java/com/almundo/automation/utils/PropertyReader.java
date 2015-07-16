@@ -7,13 +7,13 @@ import java.util.Properties;
 
 public class PropertyReader {
 	
-	private static final String PATH = "../src/main/resources/com/almundo/automation/data/";
+	private static final String PATH = "../src/main/resources/com/almundo/automation/";
 	private FileInputStream inputStream;
 	
-	public String getPropertiesValues(String testID, String property) {
+	public String getPropertiesValues(String key, String propertyFile) {
 		try {
 			Properties properties = new Properties();
-			String propLocation = PATH + property;
+			String propLocation = PATH + propertyFile;
 			System.out.println(System.getProperty("user.dir"));
 			inputStream = new FileInputStream(propLocation);
 			
@@ -23,7 +23,7 @@ public class PropertyReader {
 				throw new FileNotFoundException(propLocation + " was not found in the classpath");
 			}
 			
-			return properties.getProperty(testID);
+			return properties.getProperty(key);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
