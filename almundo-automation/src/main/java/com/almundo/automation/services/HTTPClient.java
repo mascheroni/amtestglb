@@ -33,6 +33,10 @@ public class HTTPClient {
 		this.urlConnection.addRequestProperty(key, value);
 	}
 	
+	public String getSearchRequest() {
+		return this.request;
+	}
+	
 	public void setSearchRequest(Map<String, String> data){
 		Iterator<Entry<String, String>> it = data.entrySet().iterator();
 		StringBuilder sb = new StringBuilder();

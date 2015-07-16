@@ -33,7 +33,7 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 					.get(i);
 			final JsonPrimitive key = (JsonPrimitive) jsonValuesObject
 					.getAsJsonPrimitive("key");
-			final JsonObject type = (JsonObject) jsonValuesObject.get("type");
+			final JsonPrimitive type = (JsonPrimitive) jsonValuesObject.get("type");
 			final JsonArray jsonValuesArray = jsonObject.get("values")
 					.getAsJsonArray();
 			for (int v = 0; v < jsonValuesArray.size(); v++) {

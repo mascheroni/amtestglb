@@ -10,6 +10,8 @@ import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Airline;
 import com.almundo.automation.entities.Cluster;
+import com.almundo.automation.entities.Filter;
+import com.almundo.automation.entities.Value;
 import com.almundo.automation.services.Response;
 import com.almundo.automation.utils.DataProviders;
 
@@ -55,10 +57,8 @@ public class FlightSearchTests extends BaseTest {
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
 		
-		System.out.println("Before");
-		List<Cluster> clusters = response.getSearchFlights().getClusters();
+		List<Cluster> clusters = response.getSearchFlightsAndClusters().getClusters();
 		System.out.println(clusters);
-		System.out.println("After");
 		
 		for (Cluster cluster : clusters) {
 			float adultPrice = cluster.getPrice().getDetail().getAdultPrice();
@@ -67,8 +67,10 @@ public class FlightSearchTests extends BaseTest {
 			float taxPrice = cluster.getPrice().getDetail().getTaxes();
 			float extraTax = cluster.getPrice().getDetail().getExtra_tax();
 			float total = cluster.getPrice().getTotal();
-			float sum = (adultPrice * 2) + childPrice + infantPrice + taxPrice
-					+ extraTax;
+			float sum = (adultPrice * Float.parseFloat(data.get("adults"))) + 
+						(childPrice * Float.parseFloat(data.get("children"))) +
+						(infantPrice * Float.parseFloat(data.get("infants"))) +
+						taxPrice + extraTax;
 			if (total != sum) {
 				Assert.fail("The carrier "+ cluster.getValidating_carrier()
 						+ " should have an amount of " + total
@@ -77,6 +79,31 @@ public class FlightSearchTests extends BaseTest {
 		}
 	}
 	
+	
+	@Test(description = "Test that verifies if the airport names are not null",
+		  groups = { "flight-search" },
+		  dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyAirportNamesNotNull(Map<String, String> data) {
+		String reqDate = 
+				convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		
+		List<Filter> filters = response.getFilters();
+		for (Filter filter: filters) {
+			List<Value> values = filter.getValues();
+			for (Value value: values) {
+				if(value.getName().toUpperCase().equals("NULL")){
+					Assert.fail("The Airport " + value.getCode()+ " has "
+							+ "not its name (it is null)");
+				}
+			}
+		}
+	
+	}
 	
 	
 	
