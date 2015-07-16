@@ -20,6 +20,7 @@ public class SearchFlights implements Serializable {
 
 	private LowestPricesByAirline lowestPricesByAirline;
 	private List<Cluster> clusters;
+	private List<Filter> filters;
 
 	public SearchFlights() {
 	}
@@ -47,6 +48,14 @@ public class SearchFlights implements Serializable {
 
 	public void setClusters(List<Cluster> clusters) {
 		this.clusters = clusters;
+	}
+
+	public List<Filter> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(List<Filter> filters) {
+		this.filters = filters;
 	}
 
 }

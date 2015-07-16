@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -116,14 +115,12 @@ public class XmlDataFactory {
 
 		if (dataSet != null) {
 			if (!dataSet.getDataRows().isEmpty()) {
-				List<DataRow> dataRowList = dataSet.getDataRows();
 
 				dataRowArray = new Object[dataSet.getDataRows().size()][1];
 
 				ArrayList<DataObject> dataObjects;
 
 				for (DataRow oneDataRow : dataSet.getDataRows()) {
-					int i;
 					dataObjects = oneDataRow.getDataObjects();
 					dataObjectsHashMap = new HashMap<String, String>();
 
