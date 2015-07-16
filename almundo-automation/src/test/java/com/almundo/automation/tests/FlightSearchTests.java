@@ -35,7 +35,7 @@ public class FlightSearchTests extends BaseTest {
 		Assert.assertTrue(this.validateClusters(response));
 	}
 
-	@Test(groups = { "NONE" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyPricesAccordingToNumberOfPax() {
 		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
 		this.httpClient.setSearchRequest(data);
@@ -49,14 +49,17 @@ public class FlightSearchTests extends BaseTest {
 		String actualPrice = (String) results.get("ActualPrice");
 		Assert.assertTrue(result, "The carrier " + carrier + " has "
 				+ actualPrice + " meanwhile the expected price is " + expPrice);
+		// Assert.assertTrue(response.getFilters().isEmpty());
 
 	}
 
-	@Test(groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(groups = { "NONE" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void holaKase(String param1, String param2, String param3,
 			String param4, String param5, String param6) {
 		System.out.println("");
-		System.out.println(" param1 "+param1 + " param2 " + param2 + " param3 " + param3 + " param4 " + param4 + " param5 " + param5 + " param6 " + param6 + "");
+		System.out.println(" param1 " + param1 + " param2 " + param2
+				+ " param3 " + param3 + " param4 " + param4 + " param5 "
+				+ param5 + " param6 " + param6 + "");
 		System.out.println("");
 	}
 
