@@ -15,6 +15,8 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import com.almundo.automation.services.Parameters;
+import com.almundo.automation.utils.EncryptKey;
+import com.almundo.automation.utils.PropertyReader;
 public class HTTPClient {
 	
 	private final String ITINERARI_SERVICE = 
@@ -28,6 +30,7 @@ public class HTTPClient {
 	private String port = "3128";
 	private Scanner scanner;
 	private String glbUserName = "glb-amascheroni";
+	private PropertyReader pr = new PropertyReader();
 	
 	public void addHeaderValue(String key, String value) {
 		this.urlConnection.addRequestProperty(key, value);
@@ -91,8 +94,9 @@ public class HTTPClient {
 	}
 	
 	public Response post() {
+		
 		this.openConection();
-		this.addHeaderValue("X-ApiKey", "5592f8fd99325b40cba48649");
+		this.addHeaderValue("X-ApiKey", EncryptKey.decryptText(pr.getPropertiesValues("API-Key", "conf/conf.properties")));
 		this.addHeaderValue("X-UOW", this.glbUserName);
 		StringBuilder plainResponse = new StringBuilder();
 		try {
