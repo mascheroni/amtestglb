@@ -7,28 +7,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import org.testng.annotations.DataProvider;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class XmlDataFactory {
-
-	@DataProvider(name = "params")
-	public Object[][] getParams() {
-		try {
-			this.initialize(XmlDataFactory.class
-					.getClassLoader()
-					.getResourceAsStream(
-							"//src//com//training//configuration//smokeFlightSearchParams.xml")
-					.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/**
 	 * variable singleton.
@@ -66,7 +49,7 @@ public class XmlDataFactory {
 	 *             if the property file is not found
 	 */
 	public void initialize(String projectPathToFiles) throws IOException {
-		loadTestData(projectPathToFiles);
+		this.loadTestData(projectPathToFiles);
 	}
 
 	/**
@@ -105,24 +88,6 @@ public class XmlDataFactory {
 	}
 
 	/**
-	 * This method returns a random and only one value from a dataRow which has
-	 * multiple values.
-	 * 
-	 * @param dataRowName
-	 *            The dataRow name to retrieve the value.
-	 * @return A two dimensions array of values with only one random value from
-	 *         the dataRow passed as parameter.
-	 */
-	// public Object[][] getRandomArrayFromDataRow(String dataRowName) {
-	// Object[][] dataRowArray = getArrayFromDataRow(dataRowName);
-	// Random random = new Random();
-	// int randomNumber = random.nextInt(dataRowArray[0].length);
-	// Object[][] newDataRowArray = new Object[1][1];
-	// newDataRowArray[0][0] = dataRowArray[0][randomNumber];
-	// return newDataRowArray;
-	// }
-
-	/**
 	 * This method return the values of the entire data set name given by
 	 * parameter.
 	 * 
@@ -132,8 +97,6 @@ public class XmlDataFactory {
 	 *         the data set given by parameter.
 	 */
 	public Object[][] getArrayFromDataSet(String dateSetName) {
-		// Log.getInstance().getLogger().log(Level.INFO,
-		// "Getting array from dataset: " + dateSetName);
 		Object[][] dataRowArray = null;
 
 		DataSet dataSet = null;
@@ -149,26 +112,22 @@ public class XmlDataFactory {
 
 		if (dataSet != null) {
 			if (!dataSet.getDataRows().isEmpty()) {
-				System.out.println("ARRAY 1");
 				List<DataRow> dataRowList = dataSet.getDataRows();
-				System.out.println("ARRAY 2");
 				dataRowArray = new String[dataRowList.toArray().length][((DataRow) dataRowList
 						.get(0)).getDataObjects().toArray().length];
 
 				for (DataRow oneDataRow : dataSet.getDataRows()) {
 					int i;
-					System.out.println("ARRAY 3");
 					Object[] dataValues = oneDataRow
 							.getDataObjectsValuesAsArray();
 					for (i = 0; i < dataValues.length; i++) {
-						System.out.println("ARRAY 4");
 						dataRowArray[j][i] = dataValues[i];
 					}
 					j++;
 				}
-
 			}
 		}
+
 		return dataRowArray;
 	}
 
@@ -199,14 +158,9 @@ public class XmlDataFactory {
 	 *             if the path given by parameter is not found
 	 */
 	public void loadTestData(String filesPath) throws IOException {
-		System.out.println("Before trim");
 		filesPath = filesPath.trim();
-		// Log.getInstance().getLogger().log(Level.INFO,
-		// "Loading test data from: " + filesPath);
-		System.out.println("Tomando archivos de "+filesPath);
 		try {
 			if (filesPath != null && filesPath.length() != 0) {
-				System.out.println("Luego for");
 				XStream xstreamTC = new XStream(new DomDriver());
 				xstreamTC.alias("testCaseGroup", TestCaseGroup.class);
 				xstreamTC.alias("dataSets", java.util.ArrayList.class);
@@ -215,20 +169,15 @@ public class XmlDataFactory {
 				xstreamTC.alias("dataRow", DataRow.class);
 				xstreamTC.alias("dataObjects", java.util.ArrayList.class);
 				xstreamTC.alias("dataObject", DataObject.class);
-				System.out.println("Alias creados");
 				String[] fileNames = getFileNames(filesPath);
-				System.out.println("Obtiene los file names");
 				StringBuffer data = fillDataBuffer(fileNames, filesPath);
-				System.out.println("Obtiene data");
 				String dataString = data.toString();
-				
 				testCaseGroup = (TestCaseGroup) xstreamTC.fromXML(dataString);
 				System.out.println("Testcasegroup creado");
 			}
 
 		} catch (XStreamException e) {
 			e.printStackTrace();
-			// Log.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
 		}
 	}
 
@@ -273,20 +222,6 @@ public class XmlDataFactory {
 		data.append("</dataSets>");
 		data.append("</testCaseGroup>");
 		return data;
-	}
-
-	/**
-	 * Reads the files names in the given path.
-	 * 
-	 * @param filePath
-	 *            where the files resides
-	 * @return a list with the file names
-	 * @throws IOException
-	 *             if the data file is not found
-	 */
-	private File[] getFiles(final String filePath) throws IOException {
-		File dir = new File(filePath);
-		return dir.listFiles(new XmlFileFilter());
 	}
 
 	/**

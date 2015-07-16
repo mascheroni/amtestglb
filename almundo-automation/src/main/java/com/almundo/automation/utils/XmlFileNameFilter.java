@@ -3,9 +3,11 @@ package com.almundo.automation.utils;
 import java.io.*;
 
 /**
- * This class represents a filename filter to select only the files named like is set the okFileExtensions attribute.
- * This class implements the Java FilenameFilter interface. 
- * @author rirala
+ * This class represents a filename filter to select only the files named like
+ * is set the okFileExtensions attribute.
+ * 
+ * This class implements the Java FilenameFilter interface.
+ * 
  */
 public class XmlFileNameFilter implements FilenameFilter {
 
