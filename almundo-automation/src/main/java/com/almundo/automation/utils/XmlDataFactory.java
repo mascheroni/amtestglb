@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.thoughtworks.xstream.XStream;
@@ -100,6 +103,7 @@ public class XmlDataFactory {
 		Object[][] dataRowArray = null;
 
 		DataSet dataSet = null;
+		Map<String, String> dataObjectsHashMap;
 
 		for (DataSet dataSetAux : testCaseGroup.getDataSets()) {
 			if (dataSetAux.getName().equals(dateSetName)) {
@@ -113,21 +117,25 @@ public class XmlDataFactory {
 		if (dataSet != null) {
 			if (!dataSet.getDataRows().isEmpty()) {
 				List<DataRow> dataRowList = dataSet.getDataRows();
-				dataRowArray = new String[dataRowList.toArray().length][((DataRow) dataRowList
-						.get(0)).getDataObjects().toArray().length];
+
+				dataRowArray = new Object[dataSet.getDataRows().size()][1];
+
+				ArrayList<DataObject> dataObjects;
 
 				for (DataRow oneDataRow : dataSet.getDataRows()) {
 					int i;
-					Object[] dataValues = oneDataRow
-							.getDataObjectsValuesAsArray();
-					for (i = 0; i < dataValues.length; i++) {
-						dataRowArray[j][i] = dataValues[i];
+					dataObjects = oneDataRow.getDataObjects();
+					dataObjectsHashMap = new HashMap<String, String>();
+
+					for (DataObject dataObject : dataObjects) {
+						dataObjectsHashMap.put(dataObject.getName(),
+								dataObject.getValue());
 					}
+					dataRowArray[j][0] = dataObjectsHashMap;
 					j++;
 				}
 			}
 		}
-
 		return dataRowArray;
 	}
 
