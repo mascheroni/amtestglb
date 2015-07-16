@@ -58,7 +58,6 @@ public class FlightSearchTests extends BaseTest {
 		Response response = this.httpClient.post();
 		
 		List<Cluster> clusters = response.getSearchFlightsAndClusters().getClusters();
-		System.out.println(clusters);
 		
 		for (Cluster cluster : clusters) {
 			float adultPrice = cluster.getPrice().getDetail().getAdultPrice();

@@ -14,7 +14,6 @@ public class PropertyReader {
 		try {
 			Properties properties = new Properties();
 			String propLocation = PATH + propertyFile;
-			System.out.println(System.getProperty("user.dir"));
 			inputStream = new FileInputStream(propLocation);
 			
 			if(inputStream != null) {

@@ -1,7 +1,6 @@
 package com.almundo.automation.utils;
 
 import java.io.UnsupportedEncodingException;
-import java.security.DigestException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -22,12 +21,6 @@ public class EncryptKey {
 	    0x01, 0x02, 0x03, 0x05, 0x07, 0x0B, 0x0D, 0x11
 	    };
 	 static byte[] keyArray = new byte[24];
-	 
-//	public static void main (String [] args){
-//		System.out.println(encryptText("5592f8fd99325b40cba48649"));
-//        System.out.println(decryptText("64XDVjq03EJTPuiHwu2P5BQCjxLpdv8HvNUnEQ6UH2c="));
-//
-//	}
 	
 	 public static String encryptText(String RawText)
 	    {
