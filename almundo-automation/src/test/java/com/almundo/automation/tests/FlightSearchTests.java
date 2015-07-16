@@ -1,70 +1,65 @@
 package com.almundo.automation.tests;
 
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.almundo.automation.entities.Airline;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.services.Response;
 import com.almundo.automation.utils.DataProviders;
 
 public class FlightSearchTests extends BaseTest {
 
-	private static final String PROPERTY_NAME = "search.properties";
-	private static final String TEST_ONE = "test1";
-	private static final String TEST_TWO = "test2";
-
-	@Test(groups = { "NONE" })
-	public void testMethodOne() {
-		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
+	
+	@Test(description = "Test that verifies if the airlines names are not null",
+		  groups = { "flight-search" },
+		  dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyAirlineNamesNotNull(Map<String, String> data) {
+		
+		String reqDate = 
+				convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
-		System.out.println(response.getPlainResponse());
-		Assert.assertTrue(this.validateFlights(response));
+		
+		List<Airline> airlines = response.getSearchFlights()
+				.getLowestPricesByAirline().getAirlines();
+		
+		for(Airline airline: airlines) {
+			if(airline.getName().toUpperCase().equals("NULL")){
+				Assert.fail("The airline " + airline.getCode()+ " with "
+						+ "catalog ID " + airline.getCatalog_id() + " has "
+						+ "a null value instead of its name");
+			}
+		}
 	}
-
-	@Test(groups = { "NONE" })
-	public void testMethodTwo() {
-		String data = this.data.getPropertiesValues(TEST_TWO, PROPERTY_NAME);
+	
+	
+	@Test(description = "Test that verifies that given a number of passengers, "
+			+ "the total amount be equals to the detailed amount per passenger",
+		  groups = { "flight-search" },
+		  dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyPricesAcordingToNumberOfPax(Map<String, String> data) {
+		String reqDate = 
+				convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
-		System.out.println(response.getPlainResponse());
-		Assert.assertTrue(this.validateClusters(response));
-	}
-
-	@Test(groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
-	public void verifyPricesAccordingToNumberOfPax() {
-		String data = this.data.getPropertiesValues(TEST_ONE, PROPERTY_NAME);
-		this.httpClient.setSearchRequest(data);
-		Response response = this.httpClient.post();
-		List<Cluster> clusters = response.getSearchFlightsAndClusters()
-				.getClusters();
-		Map<String, Object> results = verifyPrices(clusters);
-		String carrier = (String) results.get("Carrier");
-		boolean result = (Boolean) results.get("Result");
-		String expPrice = (String) results.get("ExpectedPrice");
-		String actualPrice = (String) results.get("ActualPrice");
-		Assert.assertTrue(result, "The carrier " + carrier + " has "
-				+ actualPrice + " meanwhile the expected price is " + expPrice);
-		// Assert.assertTrue(response.getFilters().isEmpty());
-
-	}
-
-	@Test(groups = { "NONE" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
-	public void holaKase(String param1, String param2, String param3,
-			String param4, String param5, String param6) {
-		System.out.println("");
-		System.out.println(" param1 " + param1 + " param2 " + param2
-				+ " param3 " + param3 + " param4 " + param4 + " param5 "
-				+ param5 + " param6 " + param6 + "");
-		System.out.println("");
-	}
-
-	private Map<String, Object> verifyPrices(List<Cluster> clusters) {
-		Map<String, Object> result = new HashMap<String, Object>();
+		
+		System.out.println("Before");
+		List<Cluster> clusters = response.getSearchFlights().getClusters();
+		System.out.println(clusters);
+		System.out.println("After");
+		
 		for (Cluster cluster : clusters) {
 			float adultPrice = cluster.getPrice().getDetail().getAdultPrice();
 			float childPrice = cluster.getPrice().getDetail().getChildPrice();
@@ -75,45 +70,61 @@ public class FlightSearchTests extends BaseTest {
 			float sum = (adultPrice * 2) + childPrice + infantPrice + taxPrice
 					+ extraTax;
 			if (total != sum) {
-				result.put("Carrier", cluster.getValidating_carrier());
-				result.put("Result", Boolean.FALSE);
-				result.put("ExpectedPrice", Float.toString(total));
-				result.put("ActualPrice", Float.toString(sum));
-				return result;
+				Assert.fail("The carrier "+ cluster.getValidating_carrier()
+						+ " should have an amount of " + total
+						+ ", but it has " + sum);
 			}
 		}
-		result.put("Result", Boolean.TRUE);
-		result.put("Carrier", null);
-		return result;
 	}
-
-	/**
-	 * Validate response of Search flights service
-	 * 
-	 * @param response
-	 *            Response
-	 * @return boolean
-	 */
-	private boolean validateFlights(Response response) {
-		if (!response.getSearchFlights().getLowestPricesByAirline()
-				.getAirlines().isEmpty())
-			return true;
-		else
-			return false;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String convertToSpecifDate(String date) {
+		String [] dates;
+		String departureDate;
+		String returnDate;
+		String reqDate;
+		if (date.contains("-")) {
+			dates = date.split("-");
+			departureDate = getStringDate(dates [0].trim());
+			returnDate = getStringDate(dates [1].trim());
+			reqDate = departureDate + "," + returnDate;
+		} else {
+			reqDate = getStringDate(date);
+			
+		}
+		return reqDate;
 	}
-
-	/**
-	 * Validate response of Search flights service
-	 * 
-	 * @param response
-	 *            Response
-	 * @return boolean
-	 */
-	private boolean validateClusters(Response response) {
-		if (!response.getSearchFlightsAndClusters().getClusters().isEmpty())
-			return true;
-		else
-			return false;
+	
+	
+	private String getStringDate(String days) {
+		String sDays = days.substring(0,
+				days.indexOf("d") - 1);
+		int daysToLeave = Integer.parseInt(sDays);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, daysToLeave);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(calendar.getTime());
 	}
 
 }
