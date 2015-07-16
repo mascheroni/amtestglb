@@ -121,13 +121,13 @@ public class XmlDataFactory {
 					Object[] dataValues = oneDataRow
 							.getDataObjectsValuesAsArray();
 					for (i = 0; i < dataValues.length; i++) {
-						dataRowArray[j][j] = dataValues[i] + ",";
-						i++;
+						dataRowArray[j][i] = dataValues[i];
 					}
 					j++;
 				}
 			}
 		}
+
 		return dataRowArray;
 	}
 

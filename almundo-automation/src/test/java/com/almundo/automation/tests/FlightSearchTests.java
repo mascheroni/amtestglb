@@ -56,7 +56,7 @@ public class FlightSearchTests extends BaseTest {
 	public void holaKase(String param1, String param2, String param3,
 			String param4, String param5, String param6) {
 		System.out.println("");
-		System.out.println(param1 + "" + param3 + "" + param6 + "");
+		System.out.println(" param1 "+param1 + " param2 " + param2 + " param3 " + param3 + " param4 " + param4 + " param5 " + param5 + " param6 " + param6 + "");
 		System.out.println("");
 	}
 
