@@ -3,6 +3,8 @@ package com.almundo.automation.tests;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.AssertionFailedError;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -70,6 +72,28 @@ public class FlightSearchTests extends BaseTest {
 						+ " should have an amount of " + total
 						+ ", but it has " + sum);
 			}
+		}
+	}
+	
+	@Test(description = "Verifies that given an international itinerary, "
+			+ "the domestic field be false",
+		  groups = { "flight-search" },
+		  dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyDomesticFieldFalse(Map<String, String> data) {
+		String reqDate = 
+				this.utils.convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		
+		List<Cluster> clusters = response.getSearchFlightsAndClusters().getClusters();
+		
+		for (Cluster cluster: clusters) {
+			Assert.assertFalse(cluster.isDomestic(),
+					"The International itinerary operated by " + cluster.getValidating_carrier() 
+					+ " has the domestic field TRUE");
 		}
 	}
 
