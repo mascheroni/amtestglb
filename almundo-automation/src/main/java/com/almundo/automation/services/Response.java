@@ -76,7 +76,7 @@ public class Response {
 				new SearchFlightsDeserealizer());
 		Gson gson = gsonBuilder.create();
 
-		final Type filtersType = new TypeToken<Cluster>() {
+		final Type filtersType = new TypeToken<Filter>() {
 		}.getType();
 		gsonBuilder.registerTypeAdapter(filtersType, new FilterDeserealizer());
 		gson = gsonBuilder.create();

@@ -29,27 +29,32 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 		final List<Value> values = new ArrayList<Value>();
 
 		for (int i = 0; i < jsonFilterArray.size(); i++) {
-			final JsonObject jsonValuesObject = (JsonObject) jsonFilterArray
+			final JsonObject jsonFilterObject = (JsonObject) jsonFilterArray
 					.get(i);
-			final JsonPrimitive key = (JsonPrimitive) jsonValuesObject
+			final JsonPrimitive key = (JsonPrimitive) jsonFilterObject
 					.getAsJsonPrimitive("key");
-			final JsonPrimitive type = (JsonPrimitive) jsonValuesObject.get("type");
-			final JsonArray jsonValuesArray = jsonObject.get("values")
-					.getAsJsonArray();
-			for (int v = 0; v < jsonValuesArray.size(); v++) {
-				final JsonObject jsonValueObject = (JsonObject) jsonFilterArray
-						.get(i);
-				final JsonPrimitive quantity = (JsonPrimitive) jsonValueObject
-						.getAsJsonPrimitive("quantity");
-				final JsonObject code = (JsonObject) jsonValueObject
-						.get("code");
-				final JsonObject name = (JsonObject) jsonValueObject
-						.get("name");
-				value = new Value(quantity.getAsInt(), code.getAsString(),
-						name.getAsString());
-				values.add(value);
-			}
+			final JsonPrimitive type = (JsonPrimitive) jsonFilterObject
+					.getAsJsonPrimitive("type");
 
+			if (this.getNullAsEmptyString(jsonFilterObject
+					.getAsJsonArray("values"))) {
+				final JsonArray jsonValuesArray = jsonFilterObject
+						.getAsJsonArray("values");
+
+				for (int v = 0; v < jsonValuesArray.size(); v++) {
+					final JsonObject jsonValueObject = (JsonObject) jsonValuesArray
+							.get(v);
+					final JsonPrimitive quantity = (JsonPrimitive) jsonValueObject
+							.getAsJsonPrimitive("quantity");
+					final JsonPrimitive code = (JsonPrimitive) jsonValueObject
+							.getAsJsonPrimitive("code");
+					final JsonPrimitive name = (JsonPrimitive) jsonValueObject
+							.getAsJsonPrimitive("name");
+					value = new Value(quantity.getAsInt(), code.getAsString(),
+							name.getAsString());
+					values.add(value);
+				}
+			}
 			filter = new Filter(key.getAsString(), type.getAsString(), values);
 			filters.add(filter);
 		}
@@ -57,4 +62,11 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 		return filters;
 	}
 
+	private boolean getNullAsEmptyString(JsonArray jsonArray) {
+		try {
+			return jsonArray.isJsonNull() ? false : true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
