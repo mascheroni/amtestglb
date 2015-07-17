@@ -10,7 +10,6 @@ import com.almundo.automation.entities.Airline;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.services.Response;
 import com.almundo.automation.utils.DataProviders;
-import com.almundo.automation.utils.Utils;
 
 public class FlightSearchTests extends BaseTest {
 
@@ -19,9 +18,8 @@ public class FlightSearchTests extends BaseTest {
 		  groups = { "flight-search" },
 		  dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyAirlineNamesNotNull(Map<String, String> data) {
-		Utils util = new Utils();
 		String reqDate = 
-				util.convertToSpecifDate(data.get("date"));
+				this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
 		data.put("departure", reqDate);
 		
@@ -46,9 +44,8 @@ public class FlightSearchTests extends BaseTest {
 		  groups = { "flight-search" },
 		  dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyPricesAcordingToNumberOfPax(Map<String, String> data) {
-		Utils util = new Utils();
 		String reqDate = 
-				util.convertToSpecifDate(data.get("date"));
+				this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
 		data.put("departure", reqDate);
 		
