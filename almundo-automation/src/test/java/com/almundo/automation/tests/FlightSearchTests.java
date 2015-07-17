@@ -15,7 +15,7 @@ import com.almundo.automation.utils.DataProviders;
 
 public class FlightSearchTests extends BaseTest {
 
-	@Test(description = "Test that verifies if the airlines names are not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(description = "Verifies that the airlines names are not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyAirlineNamesNotNull(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
@@ -36,8 +36,8 @@ public class FlightSearchTests extends BaseTest {
 		}
 	}
 
-	@Test(description = "Test that verifies that given a number of passengers, "
-			+ "the total amount be equals to the detailed amount per passenger", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(description = "Verifies that given a number of passengers, "
+			+ "the total amount is equal to the detailed amount per passenger", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyPricesAcordingToNumberOfPax(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
@@ -69,7 +69,7 @@ public class FlightSearchTests extends BaseTest {
 	}
 
 	@Test(description = "Verifies that given an international itinerary, "
-			+ "the domestic field be false", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+			+ "the domestic field is false", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyDomesticFieldFalse(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
@@ -90,7 +90,7 @@ public class FlightSearchTests extends BaseTest {
 		}
 	}
 
-	@Test(description = "Verify that the aiports on the filters section are not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(description = "Verify that the aiports on the filter sections are not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyAirportsOnFiltersResponse(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
