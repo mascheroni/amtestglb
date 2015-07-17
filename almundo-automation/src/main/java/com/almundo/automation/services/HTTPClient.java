@@ -19,17 +19,12 @@ import com.almundo.automation.utils.EncryptKey;
 import com.almundo.automation.utils.PropertyReader;
 public class HTTPClient {
 	
-	private final String ITINERARI_SERVICE = 
-			"https://apist.almundo.com/api/flights/itineraries?";
 	
 	private URL url;
 	private URLConnection urlConnection;
 	private String request;
 	private boolean proxy = false;
-	private String http = "proxy.corp.globant.com";
-	private String port = "3128";
 	private Scanner scanner;
-	private String glbUserName = "glb-amascheroni";
 	private PropertyReader pr = new PropertyReader();
 	
 	public void addHeaderValue(String key, String value) {
@@ -43,7 +38,7 @@ public class HTTPClient {
 	public void setSearchRequest(Map<String, String> data){
 		Iterator<Entry<String, String>> it = data.entrySet().iterator();
 		StringBuilder sb = new StringBuilder();
-		sb.append(ITINERARI_SERVICE);
+		sb.append(pr.getPropertiesValues("ITENERARI_SERVICE", "conf/conf.properties"));
 		while (it.hasNext()) {
 			Map.Entry<String, String> pair =
 					(Map.Entry<String, String>) it.next();
@@ -61,7 +56,7 @@ public class HTTPClient {
 		parameters = param.concatenateParametersRoundtrip(parameters);
 		StringBuffer sb = new StringBuffer();
 		Iterator<Parameters> iterator = parameters.iterator();
-		sb.append(ITINERARI_SERVICE);
+		sb.append(pr.getPropertiesValues("ITENERARI_SERVICE", "conf/conf.properties"));
 		while(iterator.hasNext()){
 			Parameters paramTemp = iterator.next();
 			sb.append(this.concatenarParametro(paramTemp));
@@ -86,7 +81,7 @@ public class HTTPClient {
 		this.url = new URL(this.request);
         if (this.proxy) {
 	       Proxy proxy = new Proxy(Proxy.Type.HTTP, 
-	    		   new InetSocketAddress(this.http, Integer.parseInt(this.port)));
+	    		   new InetSocketAddress(pr.getPropertiesValues("HTTP", "conf/conf.properties"), Integer.parseInt(pr.getPropertiesValues("PORT", "conf/conf.properties"))));
 	       this.urlConnection = (HttpURLConnection) url.openConnection(proxy);
 	    } else {
 	    	this.urlConnection = (HttpURLConnection) url.openConnection();
@@ -97,7 +92,7 @@ public class HTTPClient {
 		
 		this.openConection();
 		this.addHeaderValue("X-ApiKey", EncryptKey.decryptText(pr.getPropertiesValues("API-Key", "conf/conf.properties")));
-		this.addHeaderValue("X-UOW", this.glbUserName);
+		this.addHeaderValue("X-UOW", pr.getPropertiesValues("glbUserName", "conf/conf.properties"));
 		StringBuilder plainResponse = new StringBuilder();
 		try {
 			plainResponse.append(this.postAction());
