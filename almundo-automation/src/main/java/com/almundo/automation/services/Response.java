@@ -6,9 +6,11 @@ import java.util.List;
 import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.FilterDeserealizer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
+import com.almundo.automation.deserializer.SegmentDeserializer;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
 import com.almundo.automation.entities.SearchFlights;
+import com.almundo.automation.entities.Segment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -86,4 +88,16 @@ public class Response {
 		return filters;
 	}
 
+	/**
+	 * 
+	 * @return Segment
+	 */
+	public Segment getSegments() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Segment.class,
+				new SegmentDeserializer());
+		Gson gson = gsonBuilder.create();
+		Segment segment = gson.fromJson(this.plainResponse, Segment.class);
+		return segment;
+	}
 }
