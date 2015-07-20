@@ -1,4 +1,5 @@
 package com.almundo.automation.entities;
+
 /**
  * Class that defines the airlines on the request parameters using Search service
  * 
