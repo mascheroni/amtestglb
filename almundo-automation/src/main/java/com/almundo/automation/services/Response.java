@@ -3,13 +3,17 @@ package com.almundo.automation.services;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.almundo.automation.deserializer.ChoiceDeserializer;
 import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.FilterDeserealizer;
+import com.almundo.automation.deserializer.LegDeserializer;
 import com.almundo.automation.deserializer.OperatingCarrierDeserealizer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
 import com.almundo.automation.deserializer.SegmentDeserializer;
+import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
+import com.almundo.automation.entities.Leg;
 import com.almundo.automation.entities.OperatingCarrier;
 import com.almundo.automation.entities.SearchFlights;
 import com.almundo.automation.entities.Segment;
@@ -124,5 +128,23 @@ public class Response {
 		List<OperatingCarrier> operatingCarrier = (List<OperatingCarrier>) gson
 				.fromJson(this.plainResponse, operatingCarrierType);
 		return operatingCarrier;
+	}
+
+	public Choice getChoice() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Choice.class, new ChoiceDeserializer());
+		Gson gson = gsonBuilder.create();
+		Choice choice = gson.fromJson(this.plainResponse, Choice.class);
+		return choice;
+
+	}
+
+	public Leg getLeg() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
+		Gson gson = gsonBuilder.create();
+		Leg leg = gson.fromJson(this.plainResponse, Leg.class);
+		return leg;
+
 	}
 }
