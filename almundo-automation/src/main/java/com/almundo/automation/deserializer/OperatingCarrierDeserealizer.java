@@ -38,11 +38,17 @@ public class OperatingCarrierDeserealizer implements
 				for (int c = 0; c < jsonChoicesArray.size(); c++) {
 					final JsonObject jsonChoice = (JsonObject) jsonChoicesArray
 							.get(c);
-					Gson gson = new GsonBuilder().create();
-					OperatingCarrier operatingCarrier = gson.fromJson(
-							jsonChoice.get("operating_carrier"),
-							OperatingCarrier.class);
-					operatingCarriers.add(operatingCarrier);
+					final JsonArray jsonLegsArray = jsonChoice
+							.getAsJsonArray("legs");
+					for (int l = 0; l < jsonLegsArray.size(); l++) {
+						final JsonObject jsonLeg = (JsonObject) jsonLegsArray
+								.get(l);
+						Gson gson = new GsonBuilder().create();
+						OperatingCarrier operatingCarrier = gson.fromJson(
+								jsonLeg.get("operating_carrier"),
+								OperatingCarrier.class);
+						operatingCarriers.add(operatingCarrier);
+					}
 				}
 			}
 		}
