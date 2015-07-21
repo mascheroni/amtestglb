@@ -1,29 +1,29 @@
 package com.almundo.automation.entities;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
 
 public class Choice {
+	private String id;
+	private List<Leg> leg;
 	
-	private Leg leg;
-	
-	@SerializedName("id")
-	private int  id;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Leg getLeg() {
+	public List<Leg> getLeg() {
 		return leg;
 	}
 
-	public void setLeg(Leg leg) {
+	public void setLeg(List<Leg> leg) {
 		this.leg = leg;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	
 	
 

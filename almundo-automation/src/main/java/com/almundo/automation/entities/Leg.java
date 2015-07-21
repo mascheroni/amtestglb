@@ -1,22 +1,31 @@
 package com.almundo.automation.entities;
 
-import java.util.List;
 
 public class Leg {
 	
-	private List<MarketingCarrier> marketingCarriers;
+	private MarketingCarrier marketingCarriers;
+	private int number;
 
-	public Leg(List<MarketingCarrier> marketingCarriers) {
-		this.marketingCarriers = marketingCarriers;
+	public Leg() {
+		
 	}
 
-	public List<MarketingCarrier> getMarketingCarriers() {
+	public MarketingCarrier getMarketingCarriers() {
 		return marketingCarriers;
 	}
 
-	public void setMarketingCarriers(List<MarketingCarrier> marketingCarriers) {
+	public void setMarketingCarriers(MarketingCarrier marketingCarriers) {
 		this.marketingCarriers = marketingCarriers;
 	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
 	
 	
 

@@ -3,12 +3,16 @@ package com.almundo.automation.services;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.almundo.automation.deserializer.ChoiceDeserializer;
 import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.FilterDeserealizer;
+import com.almundo.automation.deserializer.LegDeserializer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
 import com.almundo.automation.deserializer.SegmentDeserializer;
+import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
+import com.almundo.automation.entities.Leg;
 import com.almundo.automation.entities.SearchFlights;
 import com.almundo.automation.entities.Segment;
 import com.google.gson.Gson;
@@ -99,5 +103,32 @@ public class Response {
 		Gson gson = gsonBuilder.create();
 		Segment segment = gson.fromJson(this.plainResponse, Segment.class);
 		return segment;
+	}
+	
+	public Choice getChoice(){
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Choice.class, new ChoiceDeserializer());
+		Gson gson = gsonBuilder.create();
+		Choice choice = gson.fromJson(this.plainResponse, Choice.class);
+		return choice;
+		
+	}
+	
+	
+	public List<Leg> getLeg(){
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Choice.class,
+				new ChoiceDeserializer());
+		Gson gson = gsonBuilder.create();
+
+		final Type legType = new TypeToken<Filter>() {
+		}.getType();
+		gsonBuilder.registerTypeAdapter(legType, new LegDeserializer());
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<Leg> legs = (List<Leg>) gson.fromJson(this.plainResponse,
+				legType);
+		return legs;
+		
 	}
 }

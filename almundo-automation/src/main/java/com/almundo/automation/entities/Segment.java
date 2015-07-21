@@ -8,14 +8,14 @@ import java.util.List;
  *
  */
 public class Segment {
-	
-	private List<Choice> choice;
 
-	public List<Choice> getChoice() {
+	private Choice choice;
+
+	public Choice getChoice() {
 		return choice;
 	}
 
-	public void setChoices(List<Choice> choice) {
+	public void setChoice(Choice choice) {
 		this.choice = choice;
 	}
 }

@@ -6,6 +6,7 @@ public class MarketingCarrier {
 	private String code;
 	private String name;
 	
+	
 	public MarketingCarrier(int catalogId, String code, String name) {
 		this.catalogId = catalogId;
 		this.code = code;
