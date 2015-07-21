@@ -5,10 +5,12 @@ import java.util.List;
 
 import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.FilterDeserealizer;
+import com.almundo.automation.deserializer.OperatingCarrierDeserealizer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
 import com.almundo.automation.deserializer.SegmentDeserializer;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
+import com.almundo.automation.entities.OperatingCarrier;
 import com.almundo.automation.entities.SearchFlights;
 import com.almundo.automation.entities.Segment;
 import com.google.gson.Gson;
@@ -92,12 +94,35 @@ public class Response {
 	 * 
 	 * @return Segment
 	 */
-	public Segment getSegments() {
+	public List<Segment> getSegments() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Segment.class,
 				new SegmentDeserializer());
 		Gson gson = gsonBuilder.create();
-		Segment segment = gson.fromJson(this.plainResponse, Segment.class);
-		return segment;
+		final Type segmentsType = new TypeToken<Segment>() {
+		}.getType();
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<Segment> segments = (List<Segment>) gson.fromJson(
+				this.plainResponse, segmentsType);
+		return segments;
+	}
+
+	/**
+	 * 
+	 * @return OperatingCarrier
+	 */
+	public List<OperatingCarrier> getOperatingCarrier() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(OperatingCarrier.class,
+				new OperatingCarrierDeserealizer());
+		Gson gson = gsonBuilder.create();
+		final Type operatingCarrierType = new TypeToken<OperatingCarrier>() {
+		}.getType();
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<OperatingCarrier> operatingCarrier = (List<OperatingCarrier>) gson
+				.fromJson(this.plainResponse, operatingCarrierType);
+		return operatingCarrier;
 	}
 }

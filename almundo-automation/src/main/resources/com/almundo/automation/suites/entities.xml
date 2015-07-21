@@ -7,7 +7,7 @@
 	<test name="Group of group Test">
 		<groups>
 			<define name="include-group">
-				<include name="entity-test" />
+				<include name="entities-tests" />
 			</define>
 			<define name="exclude-group">
 				<!-- <include name="test-to-exclude" /> -->
@@ -18,7 +18,7 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="com.almundo.automation.tests.EntityTests" />
+			<class name="com.almundo.automation.tests.EntitiesTests" />
 		</classes>
 	</test>
 </suite>

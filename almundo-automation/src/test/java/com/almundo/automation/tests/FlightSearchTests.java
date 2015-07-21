@@ -99,7 +99,7 @@ public class FlightSearchTests extends BaseTest {
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
 
-		List<Filter> filters = response.getFilters();
+		List<Filter> filters = response.getSearchFlights().getFilters();
 		List<Value> values;
 
 		for (Filter filter : filters) {
