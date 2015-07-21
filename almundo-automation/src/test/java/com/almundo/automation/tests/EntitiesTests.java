@@ -13,7 +13,7 @@ import com.almundo.automation.entities.Segment;
 import com.almundo.automation.services.Response;
 import com.almundo.automation.utils.DataProviders;
 
-public class EntityTests extends BaseTest {
+public class EntitiesTests extends BaseTest {
 
 	@Test(description = "Verifies the entity Segment", groups = { "entity-test" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifySegmentEntity(Map<String, String> data) {
@@ -25,6 +25,19 @@ public class EntityTests extends BaseTest {
 		Response response = this.httpClient.post();
 		Segment segment = response.getSegments();
 		Assert.assertNotNull("The Segment it´s null", segment);
+	}
+	
+	@Test(description = "Verifies the entity OperatingCarrier", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyOperatingCarrierEntity(Map<String, String> data) {
+		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		List<OperatingCarrier> operatingCarriers = response
+				.getOperatingCarrier();
+		Assert.assertNotNull("The entity Operating Carrier it´s null",
+				!operatingCarriers.isEmpty());
 	}
 
 	@Test(description = "Verifies the entity Choice", groups = { "entity-test" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
@@ -48,7 +61,7 @@ public class EntityTests extends BaseTest {
 		this.httpClient.setSearchRequest(data);
 		System.out.println("Test entities Leg");
 		Response response = this.httpClient.post();
-		List<Leg> leg= response.getLeg();
+		Leg leg= response.getLeg();
 		Assert.assertNotNull("The Choice it´s null", leg);
 	}
 }

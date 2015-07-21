@@ -115,20 +115,13 @@ public class Response {
 	}
 	
 	
-	public List<Leg> getLeg(){
+	public Leg getLeg(){
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(Choice.class,
-				new ChoiceDeserializer());
+		gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
 		Gson gson = gsonBuilder.create();
-
-		final Type legType = new TypeToken<Filter>() {
-		}.getType();
-		gsonBuilder.registerTypeAdapter(legType, new LegDeserializer());
-		gson = gsonBuilder.create();
-		@SuppressWarnings("unchecked")
-		List<Leg> legs = (List<Leg>) gson.fromJson(this.plainResponse,
-				legType);
-		return legs;
+		Leg leg =  gson.fromJson(this.plainResponse,
+				Leg.class);
+		return leg;
 		
 	}
 }
