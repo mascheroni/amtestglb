@@ -1,11 +1,11 @@
 package com.almundo.automation.entities;
 
 public class MarketingCarrier {
-	
+
 	private int catalogId;
 	private String code;
 	private String name;
-	
+
 	public MarketingCarrier(int catalogId, String code, String name) {
 		this.catalogId = catalogId;
 		this.code = code;
@@ -35,7 +35,5 @@ public class MarketingCarrier {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 
 }
