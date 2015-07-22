@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Leg;
+import com.almundo.automation.entities.MarketingCarrier;
 import com.almundo.automation.entities.OperatingCarrier;
 import com.almundo.automation.entities.Segment;
 import com.almundo.automation.services.Response;
@@ -47,27 +48,36 @@ public class EntitiesTests extends BaseTest {
 				!operatingCarriers.isEmpty());
 	}
 
-	@Test(description = "Verifies the entity Choice", groups = { "entity-test" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	@Test(description = "Verifies the entity Choice", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyChoiceEntity(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
 		data.put("departure", reqDate);
 		this.httpClient.setSearchRequest(data);
-		System.out.println("Test entities Choice");
 		Response response = this.httpClient.post();
-		Choice choice = response.getChoice();
-		Assert.assertNotNull("The Choice it큦 null", choice);
+		List<Choice> choices = response.getChoice();
+		Assert.assertNotNull("The Choice it큦 null", !choices.isEmpty());
 	}
-
-	@Test(description = "Verifies the entity Leg", groups = { "entity-test" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	
+	@Test(description = "Verifies the entity Leg", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyLegEntity(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
 		data.remove("date");
 		data.put("departure", reqDate);
 		this.httpClient.setSearchRequest(data);
-		System.out.println("Test entities Leg");
 		Response response = this.httpClient.post();
-		Leg leg = response.getLeg();
-		Assert.assertNotNull("The Choice it큦 null", leg);
+		List<Leg> legs = response.getLegs();
+		Assert.assertNotNull("The Choice it큦 null", !legs.isEmpty());
+	}
+	
+	@Test(description = "Verifies the entity MarketingCarrier", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyMarketingCarrierEntity(Map<String, String> data) {
+		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		List<MarketingCarrier> marketings = response.getMarketingCarriers();
+		Assert.assertNotNull("The Choice it큦 null", !marketings.isEmpty());
 	}
 }

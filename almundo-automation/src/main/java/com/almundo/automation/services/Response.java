@@ -7,6 +7,7 @@ import com.almundo.automation.deserializer.ChoiceDeserializer;
 import com.almundo.automation.deserializer.ClusterDeserealizer;
 import com.almundo.automation.deserializer.FilterDeserealizer;
 import com.almundo.automation.deserializer.LegDeserializer;
+import com.almundo.automation.deserializer.MarketingCarrierDeserializer;
 import com.almundo.automation.deserializer.OperatingCarrierDeserealizer;
 import com.almundo.automation.deserializer.SearchFlightsDeserealizer;
 import com.almundo.automation.deserializer.SegmentDeserializer;
@@ -14,6 +15,7 @@ import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
 import com.almundo.automation.entities.Leg;
+import com.almundo.automation.entities.MarketingCarrier;
 import com.almundo.automation.entities.OperatingCarrier;
 import com.almundo.automation.entities.SearchFlights;
 import com.almundo.automation.entities.Segment;
@@ -130,21 +132,43 @@ public class Response {
 		return operatingCarrier;
 	}
 
-	public Choice getChoice() {
+	public List<Choice> getChoice() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Choice.class, new ChoiceDeserializer());
 		Gson gson = gsonBuilder.create();
-		Choice choice = gson.fromJson(this.plainResponse, Choice.class);
-		return choice;
+		final Type choiceType = new TypeToken<Choice>() {
+		}.getType();
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<Choice> choices = (List<Choice>) gson.fromJson(this.plainResponse,
+				choiceType);
+		return choices;
 
 	}
 
-	public Leg getLeg() {
+	public List<Leg> getLegs() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
 		Gson gson = gsonBuilder.create();
-		Leg leg = gson.fromJson(this.plainResponse, Leg.class);
-		return leg;
-
+		final Type legType = new TypeToken<Leg>() {
+		}.getType();
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<Leg> legs = (List<Leg>) gson.fromJson(this.plainResponse, legType);
+		return legs;
+	}
+	
+	public List<MarketingCarrier> getMarketingCarriers() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(MarketingCarrier.class,
+				new MarketingCarrierDeserializer());
+		Gson gson = gsonBuilder.create();
+		final Type marketingCarrierType = new TypeToken<MarketingCarrier>() {
+		}.getType();
+		gson = gsonBuilder.create();
+		@SuppressWarnings("unchecked")
+		List<MarketingCarrier> marketingCarrier = (List<MarketingCarrier>) gson
+				.fromJson(this.plainResponse, marketingCarrierType);
+		return marketingCarrier;
 	}
 }
