@@ -17,15 +17,15 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 
 public class MarketingCarrierDeserializer implements
-		JsonDeserializer<List<MarketingCarrier>> {
+		JsonDeserializer<MarketingCarrier> {
 
 	@Override
-	public List<MarketingCarrier> deserialize(JsonElement json, Type typeOfT,
+	public MarketingCarrier deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
 		final JsonObject jsonObject = json.getAsJsonObject();
 		final JsonArray jsonClustersArray = jsonObject.get("clusters")
 				.getAsJsonArray();
-		List<MarketingCarrier> marketingCarriers = new ArrayList<MarketingCarrier>();
+		MarketingCarrier carrier = new MarketingCarrier();
 
 		for (int i = 0; i < jsonClustersArray.size(); i++) {
 			final JsonObject jsonCluster = (JsonObject) jsonClustersArray
@@ -46,14 +46,13 @@ public class MarketingCarrierDeserializer implements
 						final JsonObject jsonLeg = (JsonObject) jsonLegsArray
 								.get(l);
 						Gson gson = new GsonBuilder().create();
-						MarketingCarrier marketingCarrier = gson.fromJson(
+						carrier = gson.fromJson(
 								jsonLeg.get("marketing_carrier"),
 								MarketingCarrier.class);
-						marketingCarriers.add(marketingCarrier);
 					}
 				}
 			}
 		}
-		return marketingCarriers;
+		return carrier;
 	}
 }

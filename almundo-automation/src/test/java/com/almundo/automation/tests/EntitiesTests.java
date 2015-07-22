@@ -78,8 +78,8 @@ public class EntitiesTests extends BaseTest {
 		data.put("departure", reqDate);
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
-		List<MarketingCarrier> marketings = response.getMarketingCarriers();
-		Assert.assertNotNull("The Choice it´s null", !marketings.isEmpty());
+		MarketingCarrier marketing = response.getMarketingCarriers();
+		Assert.assertNotNull("The Choice it´s null", marketing);
 	}
 
 	@Test(description = "Verifies that the list of filters it´s not null", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)

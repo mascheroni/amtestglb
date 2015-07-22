@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.almundo.automation.entities.Choice;
+import com.almundo.automation.entities.Leg;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 
@@ -34,7 +38,21 @@ public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 				final JsonArray jsonChoicesArray = jsonSegment
 						.getAsJsonArray("choices");
 				for (int c = 0; c < jsonChoicesArray.size(); c++) {
+					final JsonObject jsonChoice = (JsonObject) jsonSegmentsArray
+							.get(c);
+					final JsonArray jsonLegArray = jsonChoice
+							.getAsJsonArray("legs");
+					
+					GsonBuilder gsonBuilder = new GsonBuilder();
+					gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
+					Gson gson = gsonBuilder.create();
+					final Type legType = new TypeToken<Leg>() {
+					}.getType();
+					gson = gsonBuilder.create();
+					@SuppressWarnings("unchecked")
+					List<Leg> legs = (List<Leg>) gson.fromJson(jsonChoice, legType);
 					choice = new Choice();
+					choice.setLeg(legs);
 					choices.add(choice);
 
 				}
