@@ -1,5 +1,7 @@
 package com.almundo.automation.entities;
 
+import java.util.List;
+
 /**
  * 
  * @author zenen.morales
@@ -7,13 +9,14 @@ package com.almundo.automation.entities;
  */
 public class Segment {
 
-	private Choice choice;
+	private List<Choice> choice;
+	
 
-	public Choice getChoice() {
+	public  List<Choice> getChoice() {
 		return choice;
 	}
 
-	public void setChoice(Choice choice) {
+	public void setChoice( List<Choice> choice) {
 		this.choice = choice;
 	}
 }

@@ -1,9 +1,16 @@
 package com.almundo.automation.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MarketingCarrier {
 
+	@SerializedName("catalog_id")
 	private int catalogId;
+	
+	@SerializedName("code")
 	private String code;
+	
+	@SerializedName("name")
 	private String name;
 
 	public MarketingCarrier(int catalogId, String code, String name) {
