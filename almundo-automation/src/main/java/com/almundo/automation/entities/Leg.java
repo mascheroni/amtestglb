@@ -3,6 +3,9 @@ package com.almundo.automation.entities;
 public class Leg {
 
 	private MarketingCarrier marketingCarriers;
+	private OperatingCarrier operatingCarrier;
+	
+
 	private int number;
 
 	public Leg() {
@@ -23,6 +26,14 @@ public class Leg {
 
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	
+	public OperatingCarrier getOperatingCarrier() {
+		return operatingCarrier;
+	}
+
+	public void setOperatingCarrier(OperatingCarrier operatingCarrier) {
+		this.operatingCarrier = operatingCarrier;
 	}
 
 }
