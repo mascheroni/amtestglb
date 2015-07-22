@@ -1,5 +1,7 @@
 package com.almundo.automation.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 
  * @author zenen.morales
@@ -7,8 +9,13 @@ package com.almundo.automation.entities;
  */
 public class Value {
 
+	@SerializedName("quantity")
 	private int quantity;
+
+	@SerializedName("code")
 	private String code;
+
+	@SerializedName("name")
 	private String name;
 
 	public Value(int quantity, String code, String name) {

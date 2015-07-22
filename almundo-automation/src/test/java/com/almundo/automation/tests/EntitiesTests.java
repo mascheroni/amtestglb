@@ -8,6 +8,7 @@ import junit.framework.Assert;
 import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Choice;
+import com.almundo.automation.entities.Filter;
 import com.almundo.automation.entities.Leg;
 import com.almundo.automation.entities.MarketingCarrier;
 import com.almundo.automation.entities.OperatingCarrier;
@@ -58,7 +59,7 @@ public class EntitiesTests extends BaseTest {
 		List<Choice> choices = response.getChoice();
 		Assert.assertNotNull("The Choice it큦 null", !choices.isEmpty());
 	}
-	
+
 	@Test(description = "Verifies the entity Leg", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyLegEntity(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
@@ -69,7 +70,7 @@ public class EntitiesTests extends BaseTest {
 		List<Leg> legs = response.getLegs();
 		Assert.assertNotNull("The Choice it큦 null", !legs.isEmpty());
 	}
-	
+
 	@Test(description = "Verifies the entity MarketingCarrier", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
 	public void verifyMarketingCarrierEntity(Map<String, String> data) {
 		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
@@ -80,4 +81,16 @@ public class EntitiesTests extends BaseTest {
 		List<MarketingCarrier> marketings = response.getMarketingCarriers();
 		Assert.assertNotNull("The Choice it큦 null", !marketings.isEmpty());
 	}
+
+	@Test(description = "Verifies that the list of filters it큦 not null", groups = { "entities-tests" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyFilters(Map<String, String> data) {
+		String reqDate = this.utils.convertToSpecifDate(data.get("date"));
+		data.remove("date");
+		data.put("departure", reqDate);
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+		List<Filter> filters = response.getFilters();
+		Assert.assertNotNull("The list of filter it큦 null", !filters.isEmpty());
+	}
+
 }
