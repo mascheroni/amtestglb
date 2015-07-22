@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.almundo.automation.entities.Filter;
 import com.almundo.automation.entities.Value;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -23,7 +25,6 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 		final JsonArray jsonFilterArray = jsonObject.get("filters")
 				.getAsJsonArray();
 
-		Value value;
 		Filter filter;
 		List<Filter> filters = new ArrayList<Filter>();
 		final List<Value> values = new ArrayList<Value>();
@@ -44,14 +45,8 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 				for (int v = 0; v < jsonValuesArray.size(); v++) {
 					final JsonObject jsonValueObject = (JsonObject) jsonValuesArray
 							.get(v);
-					final JsonPrimitive quantity = (JsonPrimitive) jsonValueObject
-							.getAsJsonPrimitive("quantity");
-					final JsonPrimitive code = (JsonPrimitive) jsonValueObject
-							.getAsJsonPrimitive("code");
-					final JsonPrimitive name = (JsonPrimitive) jsonValueObject
-							.getAsJsonPrimitive("name");
-					value = new Value(quantity.getAsInt(), code.getAsString(),
-							name.getAsString());
+					Gson gson = new GsonBuilder().create();
+					Value value = gson.fromJson(jsonValueObject, Value.class);
 					values.add(value);
 				}
 			}
