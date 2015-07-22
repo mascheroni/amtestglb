@@ -38,7 +38,7 @@ public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 				final JsonArray jsonChoicesArray = jsonSegment
 						.getAsJsonArray("choices");
 				for (int c = 0; c < jsonChoicesArray.size(); c++) {
-					final JsonObject jsonChoice = (JsonObject) jsonSegmentsArray
+					final JsonObject jsonChoice = (JsonObject) jsonChoicesArray
 							.get(c);
 					final JsonArray jsonLegArray = jsonChoice
 							.getAsJsonArray("legs");
