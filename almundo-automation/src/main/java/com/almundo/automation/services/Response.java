@@ -158,17 +158,13 @@ public class Response {
 		return legs;
 	}
 	
-	public List<MarketingCarrier> getMarketingCarriers() {
+	public MarketingCarrier getMarketingCarriers() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(MarketingCarrier.class,
 				new MarketingCarrierDeserializer());
 		Gson gson = gsonBuilder.create();
-		final Type marketingCarrierType = new TypeToken<MarketingCarrier>() {
-		}.getType();
-		gson = gsonBuilder.create();
-		@SuppressWarnings("unchecked")
-		List<MarketingCarrier> marketingCarrier = (List<MarketingCarrier>) gson
-				.fromJson(this.plainResponse, marketingCarrierType);
+		MarketingCarrier marketingCarrier = (MarketingCarrier) gson
+				.fromJson(this.plainResponse, MarketingCarrier.class);
 		return marketingCarrier;
 	}
 }

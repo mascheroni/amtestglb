@@ -8,6 +8,7 @@ import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Leg;
 import com.almundo.automation.entities.MarketingCarrier;
 import com.almundo.automation.entities.OperatingCarrier;
+import com.almundo.automation.entities.SearchFlights;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -16,6 +17,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 public class LegDeserializer implements JsonDeserializer<List<Leg>> {
 
@@ -47,7 +49,15 @@ public class LegDeserializer implements JsonDeserializer<List<Leg>> {
 					for (int l = 0; l < jsonLegsArray.size(); l++) {
 						final JsonObject jsonLeg = (JsonObject) jsonLegsArray
 								.get(l);
+						GsonBuilder gsonBuilder = new GsonBuilder();
+						gsonBuilder.registerTypeAdapter(MarketingCarrier.class,
+								new MarketingCarrierDeserializer());
+						Gson gson = gsonBuilder.create();
+
+						MarketingCarrier carrier = gson.fromJson(jsonLeg,
+								MarketingCarrier.class);
 						leg = new Leg();
+						leg.setMarketingCarriers(carrier);
 						legs.add(leg);
 					}
 

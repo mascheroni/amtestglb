@@ -77,7 +77,7 @@ public class EntitiesTests extends BaseTest {
 		data.put("departure", reqDate);
 		this.httpClient.setSearchRequest(data);
 		Response response = this.httpClient.post();
-		List<MarketingCarrier> marketings = response.getMarketingCarriers();
-		Assert.assertNotNull("The Choice it´s null", !marketings.isEmpty());
+		MarketingCarrier marketing = response.getMarketingCarriers();
+		Assert.assertNotNull("The Choice it´s null", marketing);
 	}
 }

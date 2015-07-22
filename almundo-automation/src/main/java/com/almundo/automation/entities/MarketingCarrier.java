@@ -12,6 +12,10 @@ public class MarketingCarrier {
 	
 	@SerializedName("name")
 	private String name;
+	
+	public MarketingCarrier(){
+		
+	}
 
 	public MarketingCarrier(int catalogId, String code, String name) {
 		this.catalogId = catalogId;
