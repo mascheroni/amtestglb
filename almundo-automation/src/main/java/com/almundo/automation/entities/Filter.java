@@ -16,7 +16,6 @@ public class Filter {
 	private List<Value> values;
 
 	public Filter(String key, String type, List<Value> values) {
-		super();
 		this.key = key;
 		this.type = type;
 		this.values = values;

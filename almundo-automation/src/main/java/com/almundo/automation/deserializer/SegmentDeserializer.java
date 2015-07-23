@@ -31,25 +31,21 @@ public class SegmentDeserializer implements JsonDeserializer<List<Segment>> {
 			final JsonArray jsonSegmentArray = cluster.get("segments")
 					.getAsJsonArray();
 			for (int j = 0; j < jsonSegmentArray.size(); j++) {
-				final JsonObject segmentTemp = (JsonObject) jsonSegmentArray
-						.get(j);
 				GsonBuilder gsonBuilder = new GsonBuilder();
-				gsonBuilder.registerTypeAdapter(Choice.class, new ChoiceDeserializer());
+				gsonBuilder.registerTypeAdapter(Choice.class,
+						new ChoiceDeserializer());
 				Gson gson = gsonBuilder.create();
 				final Type choiceType = new TypeToken<Choice>() {
 				}.getType();
 				gson = gsonBuilder.create();
 				@SuppressWarnings("unchecked")
-				List<Choice> choices = (List<Choice>) gson.fromJson(segmentTemp,
+				List<Choice> choices = (List<Choice>) gson.fromJson(json,
 						choiceType);
 				segment = new Segment();
 				segment.setChoice(choices);
 				segments.add(segment);
 			}
 		}
-
 		return segments;
-
 	}
-
 }
