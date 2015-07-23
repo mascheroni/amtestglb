@@ -130,6 +130,7 @@ public class XmlDataFactory {
 					}
 					Utils utils = new Utils();
 					String date = utils.convertToSpecifDate(dataObjectsHashMap.get("date"));
+					dataObjectsHashMap.remove("date");
 					dataObjectsHashMap.put("departure", date);
 					dataRowArray[j][0] = dataObjectsHashMap;
 					j++;
