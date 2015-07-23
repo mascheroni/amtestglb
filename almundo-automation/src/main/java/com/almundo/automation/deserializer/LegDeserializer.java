@@ -20,10 +20,11 @@ public class LegDeserializer implements JsonDeserializer<List<Leg>> {
 	@Override
 	public List<Leg> deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
-		
+
 		final JsonObject jsonObject = json.getAsJsonObject();
 		final JsonArray jsonClustersArray = jsonObject.get("clusters")
 				.getAsJsonArray();
+
 		Leg leg;
 		List<Leg> legs = new ArrayList<Leg>();
 
@@ -43,24 +44,20 @@ public class LegDeserializer implements JsonDeserializer<List<Leg>> {
 					final JsonArray jsonLegsArray = jsonChoice
 							.getAsJsonArray("legs");
 					for (int l = 0; l < jsonLegsArray.size(); l++) {
-						final JsonObject jsonLeg = (JsonObject) jsonLegsArray
-								.get(l);
 						GsonBuilder gsonBuilder = new GsonBuilder();
 						gsonBuilder.registerTypeAdapter(MarketingCarrier.class,
 								new MarketingCarrierDeserializer());
 						Gson gson = gsonBuilder.create();
 
-						MarketingCarrier carrier = gson.fromJson(jsonLeg,
+						MarketingCarrier carrier = gson.fromJson(json,
 								MarketingCarrier.class);
 						leg = new Leg();
 						leg.setMarketingCarriers(carrier);
 						legs.add(leg);
 					}
-
 				}
 			}
 		}
 		return legs;
-
 	}
 }

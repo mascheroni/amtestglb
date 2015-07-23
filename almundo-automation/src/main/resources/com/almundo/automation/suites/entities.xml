@@ -19,6 +19,11 @@
 		</groups>
 		<classes>
 			<class name="com.almundo.automation.tests.EntitiesTests" />
+			<!-- <methods>
+				<include name="verifyChoiceEntity"
+					invocation-numbers="0" />
+			</methods>
+			 -->
 		</classes>
 	</test>
 </suite>

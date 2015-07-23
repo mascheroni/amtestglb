@@ -25,9 +25,8 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 		final JsonArray jsonFilterArray = jsonObject.get("filters")
 				.getAsJsonArray();
 
-		Filter filter;
+		List<Value> values = new ArrayList<Value>();
 		List<Filter> filters = new ArrayList<Filter>();
-		final List<Value> values = new ArrayList<Value>();
 
 		for (int i = 0; i < jsonFilterArray.size(); i++) {
 			final JsonObject jsonFilterObject = (JsonObject) jsonFilterArray
@@ -36,12 +35,9 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 					.getAsJsonPrimitive("key");
 			final JsonPrimitive type = (JsonPrimitive) jsonFilterObject
 					.getAsJsonPrimitive("type");
-
-			if (this.getNullAsEmptyString(jsonFilterObject
-					.getAsJsonArray("values"))) {
+			if (this.getNullAsEmptyString(jsonFilterObject)) {
 				final JsonArray jsonValuesArray = jsonFilterObject
 						.getAsJsonArray("values");
-
 				for (int v = 0; v < jsonValuesArray.size(); v++) {
 					final JsonObject jsonValueObject = (JsonObject) jsonValuesArray
 							.get(v);
@@ -50,17 +46,18 @@ public class FilterDeserealizer implements JsonDeserializer<List<Filter>> {
 					values.add(value);
 				}
 			}
-			filter = new Filter(key.getAsString(), type.getAsString(), values);
+			Filter filter = new Filter(key.getAsString(), type.getAsString(),
+					values);
 			filters.add(filter);
 		}
 
 		return filters;
 	}
 
-	private boolean getNullAsEmptyString(JsonArray jsonArray) {
+	private boolean getNullAsEmptyString(JsonObject jsonFilterObject) {
 		try {
-			return jsonArray.isJsonNull() ? false : true;
-		} catch (Exception e) {
+			return jsonFilterObject.getAsJsonArray("values").isJsonArray();
+		} catch (ClassCastException classCastException) {
 			return false;
 		}
 	}

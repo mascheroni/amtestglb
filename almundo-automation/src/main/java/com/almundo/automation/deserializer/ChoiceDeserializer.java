@@ -24,6 +24,7 @@ public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 		final JsonObject jsonObject = json.getAsJsonObject();
 		final JsonArray jsonClustersArray = jsonObject.get("clusters")
 				.getAsJsonArray();
+
 		Choice choice;
 		List<Choice> choices = new ArrayList<Choice>();
 
@@ -38,27 +39,22 @@ public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 				final JsonArray jsonChoicesArray = jsonSegment
 						.getAsJsonArray("choices");
 				for (int c = 0; c < jsonChoicesArray.size(); c++) {
-					final JsonObject jsonChoice = (JsonObject) jsonChoicesArray
-							.get(c);
-					
 					GsonBuilder gsonBuilder = new GsonBuilder();
-					gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
+					gsonBuilder.registerTypeAdapter(Leg.class,
+							new LegDeserializer());
 					Gson gson = gsonBuilder.create();
 					final Type legType = new TypeToken<Leg>() {
 					}.getType();
 					gson = gsonBuilder.create();
 					@SuppressWarnings("unchecked")
-					List<Leg> legs = (List<Leg>) gson.fromJson(jsonChoice, legType);
+					List<Leg> legs = (List<Leg>) gson.fromJson(json, legType);
 					choice = new Choice();
 					choice.setLeg(legs);
 					choices.add(choice);
-
 				}
 			}
 		}
-
 		return choices;
-
 	}
 
 }
