@@ -128,6 +128,9 @@ public class XmlDataFactory {
 						dataObjectsHashMap.put(dataObject.getName(),
 								dataObject.getValue());
 					}
+					Utils utils = new Utils();
+					String date = utils.convertToSpecifDate(dataObjectsHashMap.get("date"));
+					dataObjectsHashMap.put("departure", date);
 					dataRowArray[j][0] = dataObjectsHashMap;
 					j++;
 				}

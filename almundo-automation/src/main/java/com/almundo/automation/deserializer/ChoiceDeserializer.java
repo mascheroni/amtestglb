@@ -40,8 +40,6 @@ public class ChoiceDeserializer implements JsonDeserializer<List<Choice>> {
 				for (int c = 0; c < jsonChoicesArray.size(); c++) {
 					final JsonObject jsonChoice = (JsonObject) jsonChoicesArray
 							.get(c);
-					final JsonArray jsonLegArray = jsonChoice
-							.getAsJsonArray("legs");
 					
 					GsonBuilder gsonBuilder = new GsonBuilder();
 					gsonBuilder.registerTypeAdapter(Leg.class, new LegDeserializer());
