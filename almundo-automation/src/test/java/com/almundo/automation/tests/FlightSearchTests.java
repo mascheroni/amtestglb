@@ -7,8 +7,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.almundo.automation.entities.Airline;
+import com.almundo.automation.entities.Choice;
 import com.almundo.automation.entities.Cluster;
 import com.almundo.automation.entities.Filter;
+import com.almundo.automation.entities.Leg;
 import com.almundo.automation.entities.Value;
 import com.almundo.automation.services.Response;
 import com.almundo.automation.utils.DataProviders;
@@ -42,12 +44,17 @@ public class FlightSearchTests extends BaseTest {
 				.getClusters();
 
 		for (Cluster cluster : clusters) {
-			float adultPrice = cluster.getPrice().getDetail().getAdultPrice();
-			float childPrice = cluster.getPrice().getDetail().getChildPrice();
-			float infantPrice = cluster.getPrice().getDetail().getInfantPrice();
-			float taxPrice = cluster.getPrice().getDetail().getTaxes();
-			float extraTax = cluster.getPrice().getDetail().getExtra_tax();
-			float total = cluster.getPrice().getTotal();
+			float adultPrice = Math.round(cluster.getPrice().getDetail()
+					.getAdultPrice());
+			float childPrice = Math.round(cluster.getPrice().getDetail()
+					.getChildPrice());
+			float infantPrice = Math.round(cluster.getPrice().getDetail()
+					.getInfantPrice());
+			float taxPrice = Math.round(cluster.getPrice().getDetail()
+					.getTaxes());
+			float extraTax = Math.round(cluster.getPrice().getDetail()
+					.getExtra_tax());
+			float total = Math.round(cluster.getPrice().getTotal());
 			float sum = (adultPrice * Float.parseFloat(data.get("adults")))
 					+ (childPrice * Float.parseFloat(data.get("children")))
 					+ (infantPrice * Float.parseFloat(data.get("infants")))
@@ -97,4 +104,123 @@ public class FlightSearchTests extends BaseTest {
 		}
 	}
 
+	@Test(description = "Verify the most important airports", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyAirportsInClusters(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+			Assert.assertNotNull(cluster.getValidating_carrier(),
+					"The are no airlines for this cluster " + cluster);
+		}
+	}
+
+	@Test(description = "Verify not chargimg extra tax", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyExtraTax(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+			if (cluster.isDomestic()) {
+				Assert.assertSame(
+						cluster.getPrice().getDetail().getExtra_tax(), 0,
+						"The flight " + response.getSearchFlights().getId()
+								+ " should not charg extra tax "
+								+ cluster.getPrice().getDetail().getExtra_tax());
+			}
+		}
+	}
+
+	@Test(description = "Verify right type of cabin", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyTypeCabin(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+				for(Choice choice :cluster.getSegment().getChoice()){
+					for(Leg leg : choice.getLeg()){
+						Assert.assertNotNull(leg.getCabinType(), "The fligth "+ response.getSearchFlights().getId()
+						+ " does not have the a cabin");
+					}
+				}
+			
+		}
+	}
+	
+	@Test(description = "Verify destination airport name not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyDestinationAirportName(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+				for(Choice choice :cluster.getSegment().getChoice()){
+					 Assert.assertNotNull(choice.getDestination().getName(), 
+							 "The destination airport is null for "+response.getSearchFlightsAndClusters().getId());
+					 
+					}
+				}
+			
+		}
+	
+	@Test(description = "Verify origin airport name not null", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyOriginAirportName(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+				for(Choice choice :cluster.getSegment().getChoice()){
+					 Assert.assertNotNull(choice.getOrigin().getName(), 
+							 "The origin airport is null for "+response.getSearchFlightsAndClusters().getId());
+					 
+					}
+				}
+			
+		}
+	
+	@Test(description = "Verify currency code", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyCurrencyCode(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+				Assert.assertNotNull(cluster.getPrice().getCurrency().getCode(), 
+						"The currency code is null for "
+						+response.getSearchFlightsAndClusters().getId());
+				}
+			
+		}
+	
+	@Test(description = "Verify currency mask", groups = { "flight-search" }, dataProvider = "test1", dataProviderClass = DataProviders.class)
+	public void verifyCurrencyMask(Map<String, String> data) {
+		this.httpClient.setSearchRequest(data);
+		Response response = this.httpClient.post();
+
+		List<Cluster> clusters = response.getSearchFlightsAndClusters()
+				.getClusters();
+
+		for (Cluster cluster : clusters) {
+				Assert.assertNotNull(cluster.getPrice().getCurrency().getMask(), 
+						"The currency mask is null for "
+						+response.getSearchFlightsAndClusters().getId());
+				}
+			
+		}
 }

@@ -1,5 +1,7 @@
 package com.almundo.automation.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Leg {
 
 	private MarketingCarrier marketingCarriers;
@@ -7,6 +9,8 @@ public class Leg {
 	
 
 	private int number;
+	@SerializedName("cabin_type")
+	private String cabinType;
 
 	public Leg() {
 
@@ -34,6 +38,14 @@ public class Leg {
 
 	public void setOperatingCarrier(OperatingCarrier operatingCarrier) {
 		this.operatingCarrier = operatingCarrier;
+	}
+
+	public String getCabinType() {
+		return cabinType;
+	}
+
+	public void setCabinType(String cabinType) {
+		this.cabinType = cabinType;
 	}
 
 }

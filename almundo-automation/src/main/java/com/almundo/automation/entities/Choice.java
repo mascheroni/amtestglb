@@ -8,6 +8,8 @@ public class Choice {
 	@SerializedName("id")
 	private String id;
 
+	private Origin origin;
+	private Destination destination;
 	private List<Leg> leg;
 
 	public List<Leg> getLeg() {
@@ -20,6 +22,22 @@ public class Choice {
 
 	public String getId() {
 		return id;
+	}
+
+	public Origin getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(Origin origin) {
+		this.origin = origin;
+	}
+
+	public Destination getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Destination destination) {
+		this.destination = destination;
 	}
 
 	public void setId(String id) {
