@@ -9,12 +9,10 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import com.almundo.automation.services.Parameters;
 import com.almundo.automation.utils.EncryptKey;
 import com.almundo.automation.utils.PropertyReader;
 
@@ -52,22 +50,6 @@ public class HTTPClient {
 		this.request = sb.toString().substring(0, sb.length() - 1);
 	}
 
-	public void setRequest(List<Parameters> parameters) {
-		SearchParameters param = new SearchParameters();
-		parameters = param.concatenateParametersRoundtrip(parameters);
-		StringBuffer sb = new StringBuffer();
-		Iterator<Parameters> iterator = parameters.iterator();
-		sb.append(pr.getPropertiesValues("ITENERARI_SERVICE",
-				"conf/conf.properties"));
-		while (iterator.hasNext()) {
-			Parameters paramTemp = iterator.next();
-			sb.append(this.concatenarParametro(paramTemp));
-			sb.append("&");
-		}
-
-		this.request = sb.toString();
-		System.out.println("Trying with: " + this.request);
-	}
 
 	public void openConection() {
 		try {
@@ -117,11 +99,6 @@ public class HTTPClient {
 			inputLine = inputLine + scanner.nextLine() + "\n";
 		}
 		return inputLine;
-	}
-
-	private String concatenarParametro(Parameters parametro) {
-		return parametro.parametro() + "=" + parametro.valor();
-
 	}
 
 }
